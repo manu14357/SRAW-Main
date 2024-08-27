@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: /admin  // Example, disallow admin pages
+Sitemap: https://yourwebsite.com/sitemap.xml

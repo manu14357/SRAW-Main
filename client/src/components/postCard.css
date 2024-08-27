@@ -1,0 +1,27 @@
+.post-card .primary .content {
+  -webkit-mask-image: linear-gradient(black 175px, transparent 250px);
+  mask-image: linear-gradient(black 175px, transparent 250px);
+}
+
+.post-card .secondary .title {
+  -webkit-mask-image: linear-gradient(black 70px, transparent 125px);
+  mask-image: linear-gradient(black 70px, transparent 125px);
+}
+
+html {
+  overflow-y: scroll;
+}
+
+.icon-button {
+  margin-right: 5px;
+}
+
+.share-dialog-content {
+  text-align: center;
+}
+
+.qr-code {
+  text-align: center;
+}
+
+
