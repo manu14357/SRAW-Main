@@ -22,7 +22,7 @@ router.get("/like/:postId/users", postControllers.getUserLikes);
 
 
 
-const Report = require('../models/Report');
+const Report = require('../models/report');
 
 router.post('/:postId/report', async (req, res) => {
   try {
