@@ -45,7 +45,7 @@ const unreadNotificationStyle = {
   backgroundColor: '#e3f2fd' // Very light blue color
 };
 
-const SOCKET_SERVER_URL = 'ws://localhost:4000';
+const SOCKET_SERVER_URL = 'ws://api.sraws.com:4000';
 
 const Notifications = ({ userId }) => {
   const [notifications, setNotifications] = useState([]);

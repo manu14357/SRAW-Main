@@ -43,7 +43,7 @@ const MobileProfile = (props) => {
 
   useEffect(() => {
     if (user) {
-      setShareUrl(`http://localhost:3000/users/${user.username}`);
+      setShareUrl(`http://sraws.com:3000/users/${user.username}`);
     }
   }, [user]);
 

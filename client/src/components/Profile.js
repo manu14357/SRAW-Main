@@ -41,7 +41,7 @@ const Profile = (props) => {
   useEffect(() => {
     if (props.profile) {
       setUser(props.profile.user);
-      setShareUrl(`http://localhost:3000/users/${props.profile.user.username}`);
+      setShareUrl(`http://sraws.com:3000/users/${props.profile.user.username}`);
     }
   }, [props.profile]);
 

@@ -145,7 +145,7 @@ const PostCard = ({ post: initialPost, preview, removePost }) => {
   };
 
   const generateShareLink = () => {
-    const baseUrl = "http://localhost:3000";
+    const baseUrl = "http://sraws.com:3000";
     return `${baseUrl}/posts/${post._id}`;
   };
 
@@ -189,7 +189,7 @@ const handleReportPost = async () => {
   
 
   const generateEmbedCode = () => {
-    const baseUrl = "http://localhost:3000";
+    const baseUrl = "http://sraws.com:3000";
     const embedUrl = `${baseUrl}/posts/${post._id}`;
     const iframeCode = `<iframe src="${embedUrl}" width="400" height="300"></iframe>`;
     return iframeCode;
