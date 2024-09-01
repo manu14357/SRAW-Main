@@ -154,7 +154,7 @@ app.use((req, res, next) => {
 const httpServer = require("http").createServer(app);
 const io = require("socket.io")(httpServer, {
   cors: {
-    origin: ["http://localhost:3000", "https://sraws.com" ,"https://api.sraws.com"],
+    origin: ["http://localhost:3000", "https://sraws.com" ,"https://api.sraws.com", "https://sraws.com:3000", "https://api.sraws.com:4000"],
   },
 });
 const { authSocket, socketServer } = require("./socketServer");

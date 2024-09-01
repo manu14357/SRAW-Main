@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Card, Box, Stack, Typography } from "@mui/material";
 import { useSearchParams } from "react-router-dom";
 import { getPosts, getUserLikedPosts } from "../api/posts";
@@ -10,9 +10,7 @@ import SortBySelect from "./SortBySelect";
 import HorizontalStack from "./util/HorizontalStack";
 import AdContainer from "./views/AdContainer";
 
-const adsData = [
-
-];
+const adsData = [];
 
 const PostBrowser = (props) => {
   const [posts, setPosts] = useState([]);
@@ -61,7 +59,7 @@ const PostBrowser = (props) => {
 
     setLoading(false);
     if (!data.error) {
-      setPosts([...posts, ...data.data]);
+      setPosts((prevPosts) => [...prevPosts, ...data.data]);
       setCount(data.count);
     }
   };
@@ -79,9 +77,12 @@ const PostBrowser = (props) => {
 
   useEffect(() => {
     const handleScroll = () => {
+      const scrollTop = window.scrollY || window.pageYOffset;
+      const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+      const docHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
+
       if (
-        window.innerHeight + document.documentElement.scrollTop ===
-          document.documentElement.offsetHeight &&
+        scrollTop + windowHeight >= docHeight - 50 && // Trigger when close to bottom
         !loading &&
         !end
       ) {
@@ -108,7 +109,7 @@ const PostBrowser = (props) => {
   };
 
   const removePost = (removedPost) => {
-    setPosts(posts.filter((post) => post._id !== removedPost._id));
+    setPosts((prevPosts) => prevPosts.filter((post) => post._id !== removedPost._id));
   };
 
   const contentTypeSorts = {

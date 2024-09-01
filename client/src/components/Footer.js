@@ -32,28 +32,28 @@ const Footer = () => {
           <img src={srawsmainlogo} alt="Logo" style={{ height: 50 }} />
         </Box>
         <Typography variant="body2" component="div" sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', mb: 2 }}>
-          <Link href="/" sx={{ mx: 1, '&:hover': { textDecoration: 'underline' }, color: 'text.primary' }}>
+          <Link href="/" sx={{ mx: 1, textDecoration: 'none', color: 'text.primary', cursor: 'pointer', '&:hover': { textDecoration: 'underline', color: 'primary.main' } }}>
             Home
           </Link>
-          <Link href="/Help" sx={{ mx: 1, '&:hover': { textDecoration: 'underline' }, color: 'text.primary' }}>
+          <Link href="/Help" sx={{ mx: 1, textDecoration: 'none', color: 'text.primary', cursor: 'pointer', '&:hover': { textDecoration: 'underline', color: 'primary.main' } }}>
             Help
           </Link>
-          <Link href="/about" sx={{ mx: 1, '&:hover': { textDecoration: 'underline' }, color: 'text.primary' }}>
+          <Link href="/about" sx={{ mx: 1, textDecoration: 'none', color: 'text.primary', cursor: 'pointer', '&:hover': { textDecoration: 'underline', color: 'primary.main' } }}>
             About
           </Link>
-          <Link href="/ChatPage" sx={{ mx: 1, '&:hover': { textDecoration: 'underline' }, color: 'text.primary' }}>
+          <Link href="/ChatPage" sx={{ mx: 1, textDecoration: 'none', color: 'text.primary', cursor: 'pointer', '&:hover': { textDecoration: 'underline', color: 'primary.main' } }}>
             SRAWS Community
           </Link>
-          <Link href="/privacy-policy" sx={{ mx: 1, '&:hover': { textDecoration: 'underline' }, color: 'text.primary' }}>
+          <Link href="/privacy-policy" sx={{ mx: 1, textDecoration: 'none', color: 'text.primary', cursor: 'pointer', '&:hover': { textDecoration: 'underline', color: 'primary.main' } }}>
             Privacy Policy
           </Link>
-          <Link href="/terms-of-service" sx={{ mx: 1, '&:hover': { textDecoration: 'underline' }, color: 'text.primary' }}>
+          <Link href="/terms-of-service" sx={{ mx: 1, textDecoration: 'none', color: 'text.primary', cursor: 'pointer', '&:hover': { textDecoration: 'underline', color: 'primary.main' } }}>
             Terms of Service
           </Link>
-          <Link href="/cookie-policy" sx={{ mx: 1, '&:hover': { textDecoration: 'underline' }, color: 'text.primary' }}>
+          <Link href="/cookie-policy" sx={{ mx: 1, textDecoration: 'none', color: 'text.primary', cursor: 'pointer', '&:hover': { textDecoration: 'underline', color: 'primary.main' } }}>
             Cookie Policy
           </Link>
-          <Link href="/copyright-policy" sx={{ mx: 1, '&:hover': { textDecoration: 'underline' }, color: 'text.primary' }}>
+          <Link href="/copyright-policy" sx={{ mx: 1, textDecoration: 'none', color: 'text.primary', cursor: 'pointer', '&:hover': { textDecoration: 'underline', color: 'primary.main' } }}>
             Copyright Policy
           </Link>
         </Typography>
@@ -73,10 +73,10 @@ const Footer = () => {
           </IconButton>
         </Box>
         <Typography variant="body2" color="text.primary" sx={{ mb: 2 }}>
-          Contact us: <Link href="mailto:contact@sraws.com" color="inherit">contact@sraws.com</Link>
+          Contact us: <Link href="mailto:contact@sraws.com" color="inherit" sx={{ textDecoration: 'none', cursor: 'pointer' }}>contact@sraws.com</Link>
         </Typography>
         <Typography variant="caption" color="text.primary">
-          &copy; {new Date().getFullYear()} SRAWS. All rights reserved. 
+          &copy; {new Date().getFullYear()} SRAWS. All rights reserved.
         </Typography>
       </Container>
       <ScrollTop />

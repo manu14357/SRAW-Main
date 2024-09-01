@@ -8,61 +8,61 @@ const Footer = () => {
         <Grid container spacing={2} justifyContent="center">
           <Grid item>
             <Typography variant="body2" color="textSecondary">
-              © {new Date().getFullYear()} Your Company Name. All rights reserved.
+              © {new Date().getFullYear()} SRAWS. All rights reserved.
             </Typography>
           </Grid>
           <Grid item>
-            <Link href="/" color="textSecondary" underline="hover">
-              <Typography variant="body2" color="textSecondary">
+            <Link href="/" sx={{ color: 'text.secondary', textDecoration: 'none', '&:hover': { color: 'primary.main', textDecoration: 'underline', cursor: 'pointer' } }}>
+              <Typography variant="body2">
                 Home
               </Typography>
             </Link>
           </Grid>
           <Grid item>
-            <Link href="/About" color="textSecondary" underline="hover">
-              <Typography variant="body2" color="textSecondary">
+            <Link href="/About" sx={{ color: 'text.secondary', textDecoration: 'none', '&:hover': { color: 'primary.main', textDecoration: 'underline', cursor: 'pointer' } }}>
+              <Typography variant="body2">
                 About
               </Typography>
             </Link>
           </Grid>
           <Grid item>
-            <Link href="/Help" color="textSecondary" underline="hover">
-              <Typography variant="body2" color="textSecondary">
+            <Link href="/Help" sx={{ color: 'text.secondary', textDecoration: 'none', '&:hover': { color: 'primary.main', textDecoration: 'underline', cursor: 'pointer' } }}>
+              <Typography variant="body2">
                 Help
               </Typography>
             </Link>
           </Grid>
           <Grid item>
-            <Link href="/ChatPage" color="textSecondary" underline="hover">
-              <Typography variant="body2" color="textSecondary">
+            <Link href="/ChatPage" sx={{ color: 'text.secondary', textDecoration: 'none', '&:hover': { color: 'primary.main', textDecoration: 'underline', cursor: 'pointer' } }}>
+              <Typography variant="body2">
                 SRAWS Community
               </Typography>
             </Link>
           </Grid>
           <Grid item>
-            <Link href="/privacy-policy" color="textSecondary" underline="hover">
-              <Typography variant="body2" color="textSecondary">
+            <Link href="/privacy-policy" sx={{ color: 'text.secondary', textDecoration: 'none', '&:hover': { color: 'primary.main', textDecoration: 'underline', cursor: 'pointer' } }}>
+              <Typography variant="body2">
                 Privacy Policy
               </Typography>
             </Link>
           </Grid>
           <Grid item>
-            <Link href="/terms-of-service" color="textSecondary" underline="hover">
-              <Typography variant="body2" color="textSecondary">
+            <Link href="/terms-of-service" sx={{ color: 'text.secondary', textDecoration: 'none', '&:hover': { color: 'primary.main', textDecoration: 'underline', cursor: 'pointer' } }}>
+              <Typography variant="body2">
                 Terms of Service
               </Typography>
             </Link>
           </Grid>
           <Grid item>
-            <Link href="/cookie-policy" color="textSecondary" underline="hover">
-              <Typography variant="body2" color="textSecondary">
+            <Link href="/cookie-policy" sx={{ color: 'text.secondary', textDecoration: 'none', '&:hover': { color: 'primary.main', textDecoration: 'underline', cursor: 'pointer' } }}>
+              <Typography variant="body2">
                 Cookie Policy
               </Typography>
             </Link>
           </Grid>
           <Grid item>
-            <Link href="/copyright-policy" color="textSecondary" underline="hover">
-              <Typography variant="body2" color="textSecondary">
+            <Link href="/copyright-policy" sx={{ color: 'text.secondary', textDecoration: 'none', '&:hover': { color: 'primary.main', textDecoration: 'underline', cursor: 'pointer' } }}>
+              <Typography variant="body2">
                 Copyright Policy
               </Typography>
             </Link>

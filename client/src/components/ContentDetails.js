@@ -12,8 +12,7 @@ const ContentDetails = ({ username, createdAt, edited, preview, isAdmin }) => {
       <UserAvatar width={30} height={30} username={username} />
       <Typography variant="subtitle2" color="text.secondary" gutterBottom>
         <Link
-          color="inherit"
-          underline="hover"
+          style={{ color: 'blue', textDecoration: 'none' }} // Apply inline styles here
           onClick={(e) => {
             e.stopPropagation();
           }}

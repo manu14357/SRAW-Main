@@ -3,7 +3,6 @@ import { Box, TextField, Button, Typography, Snackbar, Alert, CircularProgress }
 import SendIcon from '@mui/icons-material/Send';
 import ReplyIcon from '@mui/icons-material/Reply';
 import axios from 'axios';
-import { HelmetProvider, Helmet } from 'react-helmet-async';
 
 const CommunityChat = () => {
   const [chatMessages, setChatMessages] = useState([]);
@@ -15,16 +14,23 @@ const CommunityChat = () => {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [snackbarSeverity, setSnackbarSeverity] = useState('success');
-  const chatEndRef = useRef(null); // Reference to scroll to the bottom
+  const [loading, setLoading] = useState(false);
+  const chatEndRef = useRef(null);
 
   useEffect(() => {
     const fetchChatMessages = async () => {
+      setLoading(true);
       try {
         const response = await axios.get('/api/chat/messages');
-        setChatMessages(response.data || []); // Ensure chatMessages is always an array
-        setFilteredChatMessages(response.data || []); // Initialize with all chat messages
+        setChatMessages(response.data || []);
+        setFilteredChatMessages(response.data || []);
       } catch (error) {
         console.error('Error fetching chat messages', error);
+        setSnackbarMessage('Failed to load messages.');
+        setSnackbarSeverity('error');
+        setSnackbarOpen(true);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -32,12 +38,10 @@ const CommunityChat = () => {
   }, []);
 
   useEffect(() => {
-    // Scroll to the bottom of the chat container when messages are updated
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [chatMessages]);
 
   useEffect(() => {
-    // Filter chat messages based on search input
     if (chatSearch) {
       setFilteredChatMessages(chatMessages.filter(msg => msg.text.toLowerCase().includes(chatSearch.toLowerCase())));
     } else {
@@ -46,25 +50,28 @@ const CommunityChat = () => {
   }, [chatSearch, chatMessages]);
 
   const handleChatMessageSend = async () => {
+    setLoading(true);
     try {
       await axios.post('/api/chat/send', { message, sender: userName || 'Anonymous' });
       const newMessage = { text: message, sender: userName || 'You', createdAt: new Date(), replies: [] };
       setChatMessages(prevMessages => [...prevMessages, newMessage]);
-      setFilteredChatMessages(prevMessages => [...prevMessages, newMessage]); // Update filtered messages
+      setFilteredChatMessages(prevMessages => [...prevMessages, newMessage]);
       setMessage('');
       setUserName('');
       setSelectedMessage(null);
       setSnackbarMessage('Message sent!');
       setSnackbarSeverity('success');
-      setSnackbarOpen(true);
     } catch (error) {
       setSnackbarMessage('Failed to send message.');
       setSnackbarSeverity('error');
+    } finally {
+      setLoading(false);
       setSnackbarOpen(true);
     }
   };
 
   const handleChatReply = async (messageId) => {
+    setLoading(true);
     try {
       await axios.post('/api/chat/reply', { messageId, reply: { message }, sender: userName || 'Anonymous' });
       setChatMessages(prevMessages => prevMessages.map(msg =>
@@ -72,25 +79,24 @@ const CommunityChat = () => {
       ));
       setFilteredChatMessages(prevMessages => prevMessages.map(msg =>
         msg._id === messageId ? { ...msg, replies: [...(msg.replies || []), { text: message, sender: userName || 'Anonymous', createdAt: new Date() }] } : msg
-      )); // Update filtered messages
+      ));
       setMessage('');
       setUserName('');
       setSelectedMessage(null);
       setSnackbarMessage('Reply sent!');
       setSnackbarSeverity('success');
-      setSnackbarOpen(true);
     } catch (error) {
       setSnackbarMessage('Failed to send reply.');
       setSnackbarSeverity('error');
+    } finally {
+      setLoading(false);
       setSnackbarOpen(true);
     }
   };
 
   return (
     <Box alignItems="center" sx={{ width: '100%', maxWidth: 6000, margin: 'auto', mt: 4 }}>
-
-
-      <Typography variant="h6" component="h2" gutterBottom align="center" sx={{ fontSize: '2.4rem' ,color: 'primary.main'}}>
+      <Typography variant="h6" component="h2" gutterBottom align="center" sx={{ fontSize: '2.4rem', color: 'primary.main' }}>
         SRAWS Community
       </Typography>
 
@@ -114,35 +120,39 @@ const CommunityChat = () => {
           mb: 2
         }}
       >
-        {filteredChatMessages.map((msg) => (
-          <Box key={msg._id} sx={{ p: 2, borderBottom: '1px solid #ddd' }}>
-            <Typography variant="body1" sx={{ fontWeight: 'bold' }}>{msg.sender}</Typography>
-            <Typography variant="body2">{msg.text}</Typography>
-            <Typography variant="caption" sx={{ color: 'text.secondary' }}>{new Date(msg.createdAt).toLocaleString()}</Typography>
+        {loading ? (
+          <CircularProgress sx={{ alignSelf: 'center', mt: 2 }} />
+        ) : (
+          filteredChatMessages.map((msg) => (
+            <Box key={msg._id} sx={{ p: 2, borderBottom: '1px solid #ddd' }}>
+              <Typography variant="body1" sx={{ fontWeight: 'bold' }}>{msg.sender}</Typography>
+              <Typography variant="body2">{msg.text}</Typography>
+              <Typography variant="caption" sx={{ color: 'text.secondary' }}>{new Date(msg.createdAt).toLocaleString()}</Typography>
 
-            {msg.replies && msg.replies.length > 0 && (
-              <Box sx={{ mt: 1, pl: 2, borderLeft: '2px solid #ddd' }}>
-                {msg.replies.map((reply, index) => (
-                  <Box key={index} sx={{ mb: 1 }}>
-                    <Typography variant="body2" sx={{ fontWeight: 'bold' }}>{reply.sender}</Typography>
-                    <Typography variant="body2">{reply.text}</Typography>
-                    <Typography variant="caption" sx={{ color: 'text.secondary' }}>{new Date(reply.createdAt).toLocaleString()}</Typography>
-                  </Box>
-                ))}
-              </Box>
-            )}
-            <Button
-              startIcon={<ReplyIcon />}
-              onClick={() => {
-                setSelectedMessage(msg._id);
-                setMessage('');
-              }}
-            >
-              Reply
-            </Button>
-          </Box>
-        ))}
-        <div ref={chatEndRef} /> {/* Empty div to scroll into view */}
+              {msg.replies && msg.replies.length > 0 && (
+                <Box sx={{ mt: 1, pl: 2, borderLeft: '2px solid #ddd' }}>
+                  {msg.replies.map((reply, index) => (
+                    <Box key={index} sx={{ mb: 1 }}>
+                      <Typography variant="body2" sx={{ fontWeight: 'bold' }}>{reply.sender}</Typography>
+                      <Typography variant="body2">{reply.text}</Typography>
+                      <Typography variant="caption" sx={{ color: 'text.secondary' }}>{new Date(reply.createdAt).toLocaleString()}</Typography>
+                    </Box>
+                  ))}
+                </Box>
+              )}
+              <Button
+                startIcon={<ReplyIcon />}
+                onClick={() => {
+                  setSelectedMessage(msg._id);
+                  setMessage('');
+                }}
+              >
+                Reply
+              </Button>
+            </Box>
+          ))
+        )}
+        <div ref={chatEndRef} />
       </Box>
 
       <TextField
@@ -165,6 +175,7 @@ const CommunityChat = () => {
         variant="contained"
         color="primary"
         endIcon={<SendIcon />}
+        disabled={loading}
       >
         {selectedMessage ? 'Reply' : 'Send'}
       </Button>

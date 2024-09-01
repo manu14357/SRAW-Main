@@ -6,6 +6,7 @@ const Post = require('../models/Post'); // Import the Post model
 const Comment = require('../models/Comment'); // Import the Comment model
 const Message = require('../models/Message'); // Import the Message model
 
+// Fetch notifications for a specific user
 router.get('/notifications/:userId', async (req, res) => {
   const userId = req.params.userId;
 
@@ -18,9 +19,9 @@ router.get('/notifications/:userId', async (req, res) => {
       .populate('sender', 'username') // Populate sender field with User model
       .populate('post') // Populate post field with Post model
       .populate('comment') // Populate comment field with Comment model
-      .populate('message') // Populate message field with Message model
+      .populate('message'); // Populate message field with Message model
 
-    res.json(notifications);
+    res.status(200).json(notifications);
   } catch (error) {
     console.error('Error fetching notifications:', error);
     res.status(500).json({ error: 'Internal server error' });
@@ -37,10 +38,10 @@ router.put('/notifications/mark-all-read/:userId', async (req, res) => {
     );
     res.status(200).json({ message: 'All notifications marked as read' });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error('Error marking notifications as read:', err);
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
-
 
 // Mark a single notification as read
 router.put('/notifications/:notificationId/read', async (req, res) => {
@@ -49,7 +50,8 @@ router.put('/notifications/:notificationId/read', async (req, res) => {
     await Notification.findByIdAndUpdate(notificationId, { $set: { read: true } });
     res.status(200).json({ message: 'Notification marked as read' });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error('Error marking notification as read:', err);
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 
@@ -66,7 +68,7 @@ router.get('/messages/unread-count/:userId', async (req, res) => {
       recipient: userId, 
       read: false 
     });
-    res.json({ count: unreadCount });
+    res.status(200).json({ count: unreadCount });
   } catch (error) {
     console.error('Error fetching unread messages count:', error);
     res.status(500).json({ error: 'Internal server error' });
@@ -80,10 +82,9 @@ router.put('/messages/:messageId/read', async (req, res) => {
     await Message.findByIdAndUpdate(messageId, { $set: { read: true } });
     res.status(200).json({ message: 'Message marked as read' });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error('Error marking message as read:', err);
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
-
-
 
 module.exports = router;

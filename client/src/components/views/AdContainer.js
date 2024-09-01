@@ -18,46 +18,29 @@ import {
 } from "@mui/material";
 import { MoreVert as MoreVertIcon } from "@mui/icons-material";
 
-// Sample data for multiple ads
 const adsData = [
   {
     id: 1,
-    company: "Tech Solutions Inc.",
-    title: "Innovative Tech Solutions",
-    content: "Discover our innovative tech solutions.",
-    imageUrl: "https://via.placeholder.com/150",
-    websiteUrl: "https://www.example.com/ad1",
+    company: "Mrcitsoft Innovations Pvt. Ltd",
+    title: "Empowering Your Digital Future",
+    content: "Unleash the power of innovation with our cutting-edge solutions designed to elevate your business to new heights.",
+    imageUrl: "https://media.sraws.com/media/MRCITSOFT INNOVATIONS (4)_66d3df6dd88c1.png",
+    websiteUrl: "https://www.mrcitsoft.com",
     contactInfo: {
-      name: "John Doe",
-      email: "john.doe@example.com",
-      phone: "+1 123-456-7890",
+      name: "",
+      email: "info@mrcitsoft.com",
+      phone: "",  // Empty phone number to test hiding
     },
     companyInfo: {
-      description: "Tech Solutions Inc. is a leading provider of innovative tech solutions. We specialize in software development, IT consulting, and digital transformation services.",
-      mission: "To empower businesses through innovative technology solutions.",
-      vision: "To be the global leader in tech innovation.",
-      services: ["Software Development", "IT Consulting", "Digital Transformation"],
-      address: "1234 Tech Lane, Innovation City, TX 75001",
-    },
-  },
-  {
-    id: 2,
-    company: "Global Innovations",
-    title: "Global Innovations",
-    content: "Explore our global innovations.",
-    imageUrl: "https://via.placeholder.com/150",
-    websiteUrl: "https://www.example.com/ad2",
-    contactInfo: {
-      name: "Jane Smith",
-      email: "jane.smith@example.com",
-      phone: "+1 987-654-3210",
-    },
-    companyInfo: {
-      description: "Global Innovations is at the forefront of global advancements, offering cutting-edge solutions in various industries including healthcare, finance, and education.",
-      mission: "To drive global progress through innovative solutions.",
-      vision: "A world where innovation drives progress in every industry.",
-      services: ["Healthcare Solutions", "Financial Services", "Educational Tools"],
-      address: "4321 Innovation Blvd, Progress City, CA 90210",
+      description: "At Mrcitsoft Innovations Pvt Ltd, we are pioneers in delivering advanced tech solutions that drive business success. From building dynamic websites to creating intuitive mobile apps and safeguarding your digital assets, we are dedicated to transforming your vision into reality.",
+      mission: "To empower businesses with innovative technology, driving growth and excellence in the digital era.",
+      vision: "To be the global leader in tech innovation, transforming industries with visionary solutions.",
+      services: [
+        "Website Development: Crafting visually stunning and highly functional websites tailored to your brand.",
+        "Mobile App Development: Designing seamless mobile experiences that connect and engage users.",
+        "Cybersecurity: Protecting your digital world with state-of-the-art security solutions.",
+      ],
+      address: "", // Empty address to test hiding
     },
   },
   // Add more ads as needed
@@ -113,7 +96,7 @@ const AdContainer = () => {
             p: 2,
             mb: 0,
             width: "100%",
-            border: "1px solid #e0e0e0", // Simple border
+            border: "1px solid #e0e0e0",
           }}
         >
           <Box
@@ -220,24 +203,34 @@ const AdContainer = () => {
               </Box>
               <Box>
                 <Typography variant="subtitle1">Services:</Typography>
-                <Typography>{selectedAd.companyInfo.services.join(", ")}</Typography>
+                {selectedAd.companyInfo.services.map((service, index) => (
+                  <Typography key={index} variant="body2">
+                    - {service}
+                  </Typography>
+                ))}
               </Box>
+              {/* Conditionally render address if it's not empty */}
+              {selectedAd.companyInfo.address && (
+                <Box>
+                  <Typography variant="subtitle1">Address:</Typography>
+                  <Typography>{selectedAd.companyInfo.address}</Typography>
+                </Box>
+              )}
               <Box>
-                <Typography variant="subtitle1">Address:</Typography>
-                <Typography>{selectedAd.companyInfo.address}</Typography>
-              </Box>
-              <Box>
-                <Typography variant="subtitle1">Contact Name:</Typography>
+                <Typography variant="subtitle1"></Typography>
                 <Typography>{selectedAd.contactInfo.name}</Typography>
               </Box>
               <Box>
                 <Typography variant="subtitle1">Email:</Typography>
                 <Typography>{selectedAd.contactInfo.email}</Typography>
               </Box>
-              <Box>
-                <Typography variant="subtitle1">Phone:</Typography>
-                <Typography>{selectedAd.contactInfo.phone}</Typography>
-              </Box>
+              {/* Conditionally render phone if it's not empty */}
+              {selectedAd.contactInfo.phone && (
+                <Box>
+                  <Typography variant="subtitle1">Phone:</Typography>
+                  <Typography>{selectedAd.contactInfo.phone}</Typography>
+                </Box>
+              )}
               <Link
                 href={selectedAd.websiteUrl}
                 target="_blank"
@@ -253,9 +246,8 @@ const AdContainer = () => {
                 Interested in advertising with us? Contact us at:
               </Typography>
               <Typography variant="body1" sx={{ mt: 2 }}>
-                Email: ads@example.com
+                Email: ads@sraws.com
               </Typography>
-              <Typography variant="body1">Phone: +1 800-123-4567</Typography>
             </Box>
           )}
         </DialogContent>
