@@ -62,12 +62,12 @@ const About = () => {
         <meta name="description" content="Learn about SRAWS, a platform that empowers communities by reporting and alerting about scams and fraudulent activities." />
         <meta name="keywords" content="SRAWS, scam reports, fraud prevention, scam alerts, community safety, report scams, avoid scams" />
         <meta name="author" content="SRAWS Team" />
-        <link rel="canonical" href="https://yourwebsite.com/about" />
+        <link rel="canonical" href="https://sraws.com/About" />
         <meta property="og:title" content="About SRAWS - Report Scams & Fraudulent Activities" />
         <meta property="og:description" content="Empowering communities by reporting and alerting about scams and fraudulent activities." />
-        <meta property="og:url" content="https://yourwebsite.com/about" />
+        <meta property="og:url" content="https://sraws.com/About" />
         <meta property="og:type" content="website" />
-        <meta property="og:image" content="https://yourwebsite.com/path-to-your-image.jpg" />
+     
       </Helmet>
       <Navbar />
       <Container maxWidth="lg" sx={{ flexGrow: 1 }}>

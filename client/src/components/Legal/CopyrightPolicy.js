@@ -8,20 +8,20 @@ const CopyrightPolicy = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <Helmet>
-        <title>Copyright Policy - Your Website Name</title>
+        <title>Copyright Policy - SRAWS</title>
         <meta name="description" content="Read our copyright policy to understand how we handle intellectual property rights, reporting copyright infringements, and more." />
         <meta name="keywords" content="Copyright Policy, Intellectual Property, DMCA, Infringements, Legal" />
         <meta name="robots" content="index, follow" />
-        <link rel="canonical" href="https://www.yourwebsite.com/copyright-policy" />
-        <meta property="og:title" content="Copyright Policy - Your Website Name" />
+        <link rel="canonical" href="https://www.sraws.com/copyright-policy" />
+        <meta property="og:title" content="Copyright Policy - SRAWS" />
         <meta property="og:description" content="Learn about our copyright policy, how to report infringements, and what actions we take to protect intellectual property rights." />
         <meta property="og:type" content="article" />
-        <meta property="og:url" content="https://www.yourwebsite.com/copyright-policy" />
-        <meta property="og:image" content="https://www.yourwebsite.com/images/og-image.jpg" />
+        <meta property="og:url" content="https://www.sraws.com/copyright-policy" />
+        <meta property="og:image" content="https://www.sraws.com/images/og-image.jpg" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Copyright Policy - Your Website Name" />
+        <meta name="twitter:title" content="Copyright Policy - SRAWS" />
         <meta name="twitter:description" content="Learn about our copyright policy, how to report infringements, and what actions we take to protect intellectual property rights." />
-        <meta name="twitter:image" content="https://www.yourwebsite.com/images/twitter-image.jpg" />
+
       </Helmet>
       <Navbar />
       <Container maxWidth="md" sx={{ flexGrow: 1 }}>

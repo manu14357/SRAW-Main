@@ -154,7 +154,7 @@ app.use((req, res, next) => {
 const httpServer = require("http").createServer(app);
 const io = require("socket.io")(httpServer, {
   cors: {
-    origin: ["http://localhost:3000", "https://sraws.com" ,"http://api.sraws.com"],
+    origin: ["http://localhost:3000", "https://sraws.com" ,"https://api.sraws.com"],
   },
 });
 const { authSocket, socketServer } = require("./socketServer");
@@ -164,7 +164,7 @@ io.on("connection", (socket) => socketServer(socket));
 
 // Start the server
 httpServer.listen(PORT, () => {
-  console.log(`Server is running on http://api.sraws.com:${PORT}`);
+  console.log(`Server is running on https://api.sraws.com:${PORT}`);
 });
 
 

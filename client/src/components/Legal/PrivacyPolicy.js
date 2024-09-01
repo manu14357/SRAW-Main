@@ -12,7 +12,7 @@ const PrivacyPolicy = () => {
         <meta name="description" content="Read the privacy policy for SRAWS, detailing how we collect, use, and store your data." />
         <meta name="keywords" content="Privacy Policy, Data Protection, User Information, SRAWS" />
         <meta name="robots" content="index,follow" />
-        <link rel="canonical" href="https://sraws.mrcitsoft.com/privacy-policy" />
+        <link rel="canonical" href="https://sraws.com/privacy-policy" />
       </Helmet>
       <Navbar />
       <Container maxWidth="md" sx={{ flexGrow: 1, py: 5 }}>

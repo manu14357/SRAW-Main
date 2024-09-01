@@ -180,9 +180,9 @@ const Help = () => {
         <meta name="description" content="Find answers to frequently asked questions about SRAWS, including how to report scams, search for users, and more." />
         <meta property="og:title" content="Help Center - SRAWS" />
         <meta property="og:description" content="Find answers to frequently asked questions about SRAWS, including how to report scams, search for users, and more." />
-        <meta property="og:url" content="https://sraws.mrcitsoft.com/help" />
+        <meta property="og:url" content="https://sraws.com/Help" />
         <meta property="og:image" content="URL_TO_IMAGE" />
-        <link rel="canonical" href="https://sraws.mrcitsoft.com/help" />
+        <link rel="canonical" href="https://sraws.com/Help" />
       </Helmet>
     <Navbar />
     <Container maxWidth="md" sx={{ mt: 4, mb: 4 }}>
