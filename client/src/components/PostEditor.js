@@ -248,7 +248,7 @@ const handleMediaChange = (e) => {
   // Mock API function to fetch location data
   const fetchLocation = async (lat, lon) => {
     // Mock API endpoint to fetch location data based on lat and lon
-    const response = await fetch(`https://api.sraws.com:4000/geolocation?lat=${lat}&lon=${lon}`);
+    const response = await fetch(`http://localhost:4000/geolocation?lat=${lat}&lon=${lon}`);
     if (!response.ok) {
       throw new Error('Failed to fetch location data.');
     }

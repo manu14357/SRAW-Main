@@ -1,17 +1,13 @@
 import {
   Button,
   Divider,
-  FormControl,
   IconButton,
-  InputAdornment,
-  InputLabel,
-  OutlinedInput,
   Stack,
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useEffect, useRef, useState } from "react";
-import { AiFillBackward, AiFillCaretLeft, AiFillMessage } from "react-icons/ai";
+import { AiFillCaretLeft, AiFillMessage } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { getMessages, sendMessage } from "../api/messages";
 import { isLoggedIn } from "../helpers/authHelper";
@@ -27,10 +23,40 @@ const Messages = (props) => {
   const user = isLoggedIn();
   const [messages, setMessages] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [onlineUsers, setOnlineUsers] = useState([]);
 
   const conversationsRef = useRef(props.conversations);
   const conservantRef = useRef(props.conservant);
   const messagesRef = useRef(messages);
+
+  useEffect(() => {
+    socket.on("user-online", (userId) => {
+      setOnlineUsers((prev) => {
+        if (!prev.includes(userId)) {
+          return [...prev, userId];
+        }
+        return prev;
+      });
+    });
+
+    socket.on("user-offline", (userId) => {
+      setOnlineUsers((prev) => prev.filter((id) => id !== userId));
+    });
+
+    return () => {
+      socket.off("user-online");
+      socket.off("user-offline");
+    };
+  }, []);
+
+  const handleOnline = () => {
+    socket.emit("online");
+  };
+
+  useEffect(() => {
+    handleOnline(); // Notify when component mounts
+  }, []);
+
   useEffect(() => {
     conversationsRef.current = props.conversations;
     conservantRef.current = props.conservant;
@@ -124,8 +150,6 @@ const Messages = (props) => {
       senderId
     );
 
-    console.log(username + " " + content);
-
     if (conversation) {
       let newMessages = [newMessage];
       if (messagesRef.current) {
@@ -162,76 +186,86 @@ const Messages = (props) => {
 
   useEffect(() => {
     socket.on("receive-message", handleReceiveMessage);
+    return () => {
+      socket.off("receive-message", handleReceiveMessage);
+    };
   }, []);
 
-  return props.conservant ? (
+  return (
     <>
-      {messages && conversation && !loading ? (
+      {props.conservant ? (
         <>
-          <HorizontalStack
-            alignItems="center"
-            spacing={2}
-            sx={{ px: 2, height: "60px" }}
-          >
-            {props.mobile && (
-              <IconButton
-                onClick={() => props.setConservant(null)}
-                sx={{ padding: 0 }}
+          {messages && conversation && !loading ? (
+            <>
+              <HorizontalStack
+                alignItems="center"
+                spacing={2}
+                sx={{ px: 2, height: "60px" }}
               >
-                <AiFillCaretLeft />
-              </IconButton>
-            )}
-            <UserAvatar
-              username={props.conservant.username}
-              height={30}
-              width={30}
-            />
-            <Typography>
-              <Link to={"/users/" + props.conservant.username}>
-                <b>{props.conservant.username}</b>
-              </Link>
-            </Typography>
-          </HorizontalStack>
-          <Divider />
-          <Box sx={{ height: "calc(100vh - 240px)" }}>
-            <Box sx={{ height: "100%" }}>
-              <Stack
-                sx={{ padding: 2, overflowY: "auto", maxHeight: "100%" }}
-                direction="column-reverse"
-              >
-                <div ref={messagesEndRef} />
-                {messages.map((message, i) => (
-                  <Message
-                    conservant={props.conservant}
-                    message={message}
-                    key={i}
-                  />
-                ))}
-              </Stack>
-            </Box>
-          </Box>
-          <SendMessage onSendMessage={handleSendMessage} />
-          {scrollToBottom()}
+                {props.mobile && (
+                  <IconButton
+                    onClick={() => props.setConservant(null)}
+                    sx={{ padding: 0 }}
+                  >
+                    <AiFillCaretLeft />
+                  </IconButton>
+                )}
+                <UserAvatar
+                  username={props.conservant.username}
+                  height={30}
+                  width={30}
+                  online={onlineUsers.includes(props.conservant._id)} // Pass online status
+                />
+                <Typography>
+                  <Link to={"/users/" + props.conservant.username}>
+                    <b>{props.conservant.username}</b>
+                  </Link>
+                </Typography>
+              </HorizontalStack>
+              <Divider />
+              <Box sx={{ height: "calc(100vh - 240px)" }}>
+                <Box sx={{ height: "100%" }}>
+                  <Stack
+                    sx={{ padding: 2, overflowY: "auto", maxHeight: "100%" }}
+                    direction="column-reverse"
+                  >
+                    <div ref={messagesEndRef} />
+                    {messages.map((message, i) => (
+                      <Message
+                        conservant={props.conservant}
+                        message={message}
+                        key={i}
+                      />
+                    ))}
+                  </Stack>
+                </Box>
+              </Box>
+              <SendMessage
+                onSendMessage={handleSendMessage}
+              />
+              {scrollToBottom()}
+            </>
+          ) : (
+            <Stack sx={{ height: "100%" }} justifyContent="center">
+              <Loading />
+            </Stack>
+          )}
         </>
       ) : (
-        <Stack sx={{ height: "100%" }} justifyContent="center">
-          <Loading />
+        <Stack
+          sx={{ height: "100%" }}
+          justifyContent="center"
+          alignItems="center"
+          spacing={2}
+        >
+          <AiFillMessage size={80} />
+          <Typography variant="h5">SRAWS Messenger</Typography>
+          <Typography color="text.secondary">
+            Privately message other users on SRAWS
+          </Typography>
         </Stack>
       )}
     </>
-  ) : (
-    <Stack
-      sx={{ height: "100%" }}
-      justifyContent="center"
-      alignItems="center"
-      spacing={2}
-    >
-      <AiFillMessage size={80} />
-      <Typography variant="h5">SRAW Messenger</Typography>
-      <Typography color="text.secondary">
-        Privately message other users on SRAW
-      </Typography>
-    </Stack>
   );
 };
 

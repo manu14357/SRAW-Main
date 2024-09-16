@@ -176,7 +176,7 @@ const LoginView = () => {
           <Typography variant="body2" color="text.secondary">
             Need help? Contact support at{" "}
             <a
-              href="mailto:support@sraw.com"
+              href="mailto:support@team.sraws.com"
               style={{
                 textDecoration: "none",
                 color: "#1976d2",
@@ -185,7 +185,7 @@ const LoginView = () => {
                 marginTop: "8px",
               }}
             >
-              support@sraw.com
+              support@team.sraws.com
             </a>
           </Typography>
         </Box>

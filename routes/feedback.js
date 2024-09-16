@@ -5,21 +5,34 @@ const Feedback = require('../models/Feedback');
 // Submit feedback
 router.post('/submit', async (req, res) => {
   try {
-    const feedback = new Feedback(req.body);
-    await feedback.save();
-    res.status(201).json(feedback);
+    // Validate request body (e.g., check for required fields)
+    const { name, title, feedback } = req.body;
+    if (!title || !feedback) {
+      return res.status(400).json({ error: 'Title and feedback are required' });
+    }
+
+    const newFeedback = new Feedback({
+      name,
+      title,
+      feedback
+    });
+
+    const savedFeedback = await newFeedback.save();
+    res.status(201).json(savedFeedback);
   } catch (error) {
+    console.error('Error submitting feedback:', error);
     res.status(400).json({ error: error.message });
   }
 });
 
-// Get all feedback
+// Endpoint to get all feedbacks
 router.get('/all', async (req, res) => {
   try {
-    const feedbacks = await Feedback.find();
-    res.status(200).json(feedbacks);
+    const feedbacks = await Feedback.find(); // Fetch feedbacks from the database
+    res.json(feedbacks);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    console.error('Error fetching feedbacks:', error);
+    res.status(500).json({ error: 'Failed to fetch feedbacks' });
   }
 });
 
@@ -27,13 +40,20 @@ router.get('/all', async (req, res) => {
 router.post('/reply', async (req, res) => {
   try {
     const { feedbackId, reply } = req.body;
-    const feedback = await Feedback.findById(feedbackId);
-    if (!feedback) return res.status(404).json({ error: 'Feedback not found' });
+    if (!feedbackId || !reply) {
+      return res.status(400).json({ error: 'Feedback ID and reply are required' });
+    }
 
-    feedback.replies.push({ reply });
-    await feedback.save();
-    res.status(200).json(feedback);
+    const feedback = await Feedback.findById(feedbackId);
+    if (!feedback) {
+      return res.status(404).json({ error: 'Feedback not found' });
+    }
+
+    feedback.replies.push(reply); // Assuming reply is an object
+    const updatedFeedback = await feedback.save();
+    res.status(200).json(updatedFeedback);
   } catch (error) {
+    console.error('Error replying to feedback:', error);
     res.status(400).json({ error: error.message });
   }
 });

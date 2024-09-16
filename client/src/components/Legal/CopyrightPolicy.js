@@ -17,7 +17,7 @@ const CopyrightPolicy = () => {
         <meta property="og:description" content="Learn about our copyright policy, how to report infringements, and what actions we take to protect intellectual property rights." />
         <meta property="og:type" content="article" />
         <meta property="og:url" content="https://www.sraws.com/copyright-policy" />
-        <meta property="og:image" content="https://www.sraws.com/images/og-image.jpg" />
+        <meta property="og:image" content="" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Copyright Policy - SRAWS" />
         <meta name="twitter:description" content="Learn about our copyright policy, how to report infringements, and what actions we take to protect intellectual property rights." />
@@ -97,8 +97,8 @@ const CopyrightPolicy = () => {
               6. Contact Information
             </Typography>
             <Typography variant="body1" paragraph>
-              Email: [Insert email address]<br />
-              Community Forum: [Insert forum link]
+                Email: support@team.sraws.com<br />
+                Community Forum: <a href="https://sraws.com/ChatPage" target="_blank" rel="noopener noreferrer">SRAWS Community</a>
             </Typography>
           </Box>
 

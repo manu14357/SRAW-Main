@@ -3,6 +3,7 @@ import { Box, TextField, Button, Typography, Snackbar, Alert, CircularProgress }
 import SendIcon from '@mui/icons-material/Send';
 import ReplyIcon from '@mui/icons-material/Reply';
 import axios from 'axios';
+import io from 'socket.io-client';
 
 const CommunityChat = () => {
   const [chatMessages, setChatMessages] = useState([]);
@@ -21,7 +22,7 @@ const CommunityChat = () => {
     const fetchChatMessages = async () => {
       setLoading(true);
       try {
-        const response = await axios.get('/api/chat/messages');
+        const response = await axios.get('https://api.sraws.com/api/chat/messages');
         setChatMessages(response.data || []);
         setFilteredChatMessages(response.data || []);
       } catch (error) {
@@ -49,13 +50,24 @@ const CommunityChat = () => {
     }
   }, [chatSearch, chatMessages]);
 
+  // WebSocket setup
+  useEffect(() => {
+    const socket = io('/'); // Connect to the server
+    socket.on('chatMessage', (newMessage) => {
+      setChatMessages(prevMessages => [...prevMessages, newMessage]);
+      setFilteredChatMessages(prevMessages => [...prevMessages, newMessage]);
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
   const handleChatMessageSend = async () => {
     setLoading(true);
     try {
-      await axios.post('/api/chat/send', { message, sender: userName || 'Anonymous' });
+      await axios.post('https://api.sraws.com/api/chat/send', { message, sender: userName || 'Anonymous' });
       const newMessage = { text: message, sender: userName || 'You', createdAt: new Date(), replies: [] };
-      setChatMessages(prevMessages => [...prevMessages, newMessage]);
-      setFilteredChatMessages(prevMessages => [...prevMessages, newMessage]);
       setMessage('');
       setUserName('');
       setSelectedMessage(null);
@@ -73,13 +85,7 @@ const CommunityChat = () => {
   const handleChatReply = async (messageId) => {
     setLoading(true);
     try {
-      await axios.post('/api/chat/reply', { messageId, reply: { message }, sender: userName || 'Anonymous' });
-      setChatMessages(prevMessages => prevMessages.map(msg =>
-        msg._id === messageId ? { ...msg, replies: [...(msg.replies || []), { text: message, sender: userName || 'Anonymous', createdAt: new Date() }] } : msg
-      ));
-      setFilteredChatMessages(prevMessages => prevMessages.map(msg =>
-        msg._id === messageId ? { ...msg, replies: [...(msg.replies || []), { text: message, sender: userName || 'Anonymous', createdAt: new Date() }] } : msg
-      ));
+      await axios.post('https://api.sraws.com/api/chat/reply', { messageId, reply: { message }, sender: userName || 'Anonymous' });
       setMessage('');
       setUserName('');
       setSelectedMessage(null);
@@ -97,7 +103,7 @@ const CommunityChat = () => {
   return (
     <Box alignItems="center" sx={{ width: '100%', maxWidth: 6000, margin: 'auto', mt: 4 }}>
       <Typography variant="h6" component="h2" gutterBottom align="center" sx={{ fontSize: '2.4rem', color: 'primary.main' }}>
-        SRAWS Community
+        Sraws Community
       </Typography>
 
       <TextField

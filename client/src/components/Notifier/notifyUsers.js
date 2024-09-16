@@ -12,7 +12,7 @@ const checkAndSendNotificationEmail = async () => {
         const unreadNotifications = await Notification.find({
             recipient: user._id,
             read: false,
-            createdAt: { $gte: subMinutes(new Date(), 2) } // Check notifications from the last 5 minutes
+            createdAt: { $gte: subMinutes(new Date(), 10) } // Check notifications from the last 5 minutes
         }).sort({ createdAt: -1 })
           .populate('sender', 'username'); // Populate sender's username
 

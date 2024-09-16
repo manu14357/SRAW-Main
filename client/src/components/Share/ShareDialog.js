@@ -1,4 +1,3 @@
-// ShareDialog.jsx
 import React, { useState } from 'react';
 import {
   Dialog,
@@ -12,16 +11,20 @@ import {
   Box,
   Snackbar,
   Alert,
-  TextField,
-  CircularProgress
+  CircularProgress,
+  Tooltip,
+  Slide
 } from '@mui/material';
 import QRCodeWithLogo from './QRCodeWithLogo'; // Adjust import if necessary
 import { FaFacebook, FaTwitter, FaLinkedin, FaWhatsapp, FaEnvelope, FaFacebookMessenger } from 'react-icons/fa';
 
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
 const ShareDialog = ({ open, onClose, link, postSummary }) => {
   const [copySuccess, setCopySuccess] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [email, setEmail] = useState('');
 
   const handleCopy = () => {
     setLoading(true);
@@ -32,82 +35,89 @@ const ShareDialog = ({ open, onClose, link, postSummary }) => {
     });
   };
 
-  const handleEmailShare = () => {
-    const mailtoLink = `mailto:${encodeURIComponent(email)}?subject=Check this out&body=${encodeURIComponent(link)}`;
-    window.open(mailtoLink, '_blank');
-    setEmail('');
-    onClose();
-  };
-
   return (
     <>
-      <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
-        <DialogTitle sx={{ textAlign: 'center', fontWeight: 'bold' }}>Share Post</DialogTitle>
+      <Dialog
+        open={open}
+        onClose={onClose}
+        fullWidth
+        maxWidth="xs" // Reduced width for desktop mode
+        TransitionComponent={Transition}
+        sx={{ '& .MuiDialog-paper': { borderRadius: '16px', padding: '20px' } }}
+      >
+        <DialogTitle
+          sx={{
+            textAlign: 'center',
+            fontWeight: 'bold',
+            fontSize: '1.4rem',
+            backgroundColor: 'blue',
+            color: '#fff',
+            padding: '12px',
+            borderTopLeftRadius: '16px',
+            borderTopRightRadius: '16px',
+          }}
+        >
+          Share This Post
+        </DialogTitle>
         <DialogContent>
           <Stack spacing={3} alignItems="center">
-            <Typography variant="h6" align="center">
-              Share this post:
+            <Typography variant="body1" align="center" sx={{ fontSize: '1.1rem', fontWeight: 'medium' }}>
+              Share this post with others:
             </Typography>
             {postSummary && (
-              <Typography variant="body2" color="textSecondary" align="center">
+              <Typography
+                variant="body2"
+                color="textSecondary"
+                align="center"
+                sx={{ fontStyle: 'italic', maxWidth: '80%', marginBottom: '16px' }}
+              >
                 {postSummary}
               </Typography>
             )}
             <Box display="flex" justifyContent="center" flexWrap="wrap" gap={2} mb={3}>
-              <IconButton
-                component="a"
-                href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(link)}`}
-                target="_blank"
-                aria-label="Share on Facebook"
-                sx={{ bgcolor: '#3b5998', '&:hover': { bgcolor: '#334d84' } }}
-              >
-                <FaFacebook color="#ffffff" />
-              </IconButton>
-              <IconButton
-                component="a"
-                href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(link)}`}
-                target="_blank"
-                aria-label="Share on Twitter"
-                sx={{ bgcolor: '#1da1f2', '&:hover': { bgcolor: '#0d95e8' } }}
-              >
-                <FaTwitter color="#ffffff" />
-              </IconButton>
-              <IconButton
-                component="a"
-                href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(link)}`}
-                target="_blank"
-                aria-label="Share on LinkedIn"
-                sx={{ bgcolor: '#0077b5', '&:hover': { bgcolor: '#005c99' } }}
-              >
-                <FaLinkedin color="#ffffff" />
-              </IconButton>
-              <IconButton
-                component="a"
-                href={`https://wa.me/?text=${encodeURIComponent(link)}`}
-                target="_blank"
-                aria-label="Share on WhatsApp"
-                sx={{ bgcolor: '#25D366', '&:hover': { bgcolor: '#1ebc6d' } }}
-              >
-                <FaWhatsapp color="#ffffff" />
-              </IconButton>
-              <IconButton
-                component="a"
-                href={`mailto:?subject=Check this out&body=${encodeURIComponent(link)}`}
-                target="_blank"
-                aria-label="Share via Email"
-                sx={{ bgcolor: '#D44638', '&:hover': { bgcolor: '#b83d30' } }}
-              >
-                <FaEnvelope color="#ffffff" />
-              </IconButton>
-              <IconButton
-                component="a"
-                href={`https://www.messenger.com/t/?link=${encodeURIComponent(link)}`}
-                target="_blank"
-                aria-label="Share via Messenger"
-                sx={{ bgcolor: '#0084ff', '&:hover': { bgcolor: '#0073e6' } }}
-              >
-                <FaFacebookMessenger color="#ffffff" />
-              </IconButton>
+              {[{
+                href: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(link)}`,
+                label: 'Facebook',
+                icon: <FaFacebook color="#ffffff" />,
+                bgColor: '#3b5998',
+                hoverColor: '#334d84'
+              }, {
+                href: `https://twitter.com/intent/tweet?url=${encodeURIComponent(link)}`,
+                label: 'Twitter',
+                icon: <FaTwitter color="#ffffff" />,
+                bgColor: '#1da1f2',
+                hoverColor: '#0d95e8'
+              }, {
+                href: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(link)}`,
+                label: 'LinkedIn',
+                icon: <FaLinkedin color="#ffffff" />,
+                bgColor: '#0077b5',
+                hoverColor: '#005c99'
+              }, {
+                href: `https://wa.me/?text=${encodeURIComponent(link)}`,
+                label: 'WhatsApp',
+                icon: <FaWhatsapp color="#ffffff" />,
+                bgColor: '#25D366',
+                hoverColor: '#1ebc6d'
+              }, {
+                href: `https://www.messenger.com/t/?link=${encodeURIComponent(link)}`,
+                label: 'Messenger',
+                icon: <FaFacebookMessenger color="#ffffff" />,
+                bgColor: '#0084ff',
+                hoverColor: '#0073e6'
+              }].map(({ href, label, icon, bgColor, hoverColor }, index) => (
+                <Tooltip key={index} title={label} arrow>
+                  <IconButton
+                    component="a"
+                    href={href}
+                    target="_blank"
+                    aria-label={label}
+                    sx={{ bgcolor: bgColor, '&:hover': { bgcolor: hoverColor }, transition: 'background-color 0.3s', p: 1.5 }}
+                  >
+                    {icon}
+                  </IconButton>
+                </Tooltip>
+              ))}
             </Box>
             <Box display="flex" justifyContent="center" mb={3}>
               <QRCodeWithLogo value={link} />
@@ -118,32 +128,16 @@ const ShareDialog = ({ open, onClose, link, postSummary }) => {
               onClick={handleCopy}
               fullWidth
               disabled={loading}
-              sx={{ height: 48, fontWeight: 'bold' }}
+              sx={{ height: 48, fontWeight: 'bold', mb: 2, borderRadius: '8px' }}
             >
-              {loading ? <CircularProgress size={24} color="inherit" /> : 'Copy Link'}
-            </Button>
-            <TextField
-              label="Email Address"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              fullWidth
-              sx={{ mt: 2 }}
-            />
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={handleEmailShare}
-              fullWidth
-              disabled={!email}
-              sx={{ height: 48, fontWeight: 'bold' }}
-            >
-              Share via Email
+              {loading ? <CircularProgress size={24} color="primary.main" /> : 'Copy Link'}
             </Button>
           </Stack>
         </DialogContent>
         <DialogActions>
-          <Button onClick={onClose} color="primary">Close</Button>
+          <Button onClick={onClose} color="primary" variant="outlined" sx={{ borderRadius: '8px' }}>
+            Close
+          </Button>
         </DialogActions>
       </Dialog>
       <Snackbar
@@ -152,7 +146,7 @@ const ShareDialog = ({ open, onClose, link, postSummary }) => {
         onClose={() => setCopySuccess(false)}
         message="Link copied to clipboard!"
       >
-        <Alert onClose={() => setCopySuccess(false)} severity="success">
+        <Alert onClose={() => setCopySuccess(false)} severity="success" sx={{ borderRadius: '8px' }}>
           Link copied to clipboard!
         </Alert>
       </Snackbar>

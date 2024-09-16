@@ -27,11 +27,12 @@ const Report = require('../models/report');
 router.post('/:postId/report', async (req, res) => {
   try {
     const { postId } = req.params;
-    const { reporter } = req.body;
+    const { reporter, reason } = req.body;  // Get reason from request
 
     const report = new Report({
       post: postId,
       reporter: reporter,
+      reason: reason,  // Store reason in report
       reportedAt: new Date(),
     });
 
@@ -43,6 +44,8 @@ router.post('/:postId/report', async (req, res) => {
     res.status(500).json({ error: 'An error occurred while reporting the post' });
   }
 });
+
+
 
 
 router.get("/:id", async (req, res) => {

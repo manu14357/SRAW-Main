@@ -42,7 +42,7 @@ const Footer = () => {
             About
           </Link>
           <Link href="/ChatPage" sx={{ mx: 1, textDecoration: 'none', color: 'text.primary', cursor: 'pointer', '&:hover': { textDecoration: 'underline', color: 'primary.main' } }}>
-            SRAWS Community
+            Sraws Community
           </Link>
           <Link href="/privacy-policy" sx={{ mx: 1, textDecoration: 'none', color: 'text.primary', cursor: 'pointer', '&:hover': { textDecoration: 'underline', color: 'primary.main' } }}>
             Privacy Policy
@@ -76,7 +76,7 @@ const Footer = () => {
           Contact us: <Link href="mailto:contact@sraws.com" color="inherit" sx={{ textDecoration: 'none', cursor: 'pointer' }}>contact@sraws.com</Link>
         </Typography>
         <Typography variant="caption" color="text.primary">
-          &copy; {new Date().getFullYear()} SRAWS. All rights reserved.
+          &copy; {new Date().getFullYear()} Sraws. All rights reserved.
         </Typography>
       </Container>
       <ScrollTop />

@@ -7,7 +7,7 @@ const Copyright = () => {
     <Typography variant="subtitle1" color="text.secondary">
       Copyright © 2024{" "}
       <Link to="/" color="inherit">
-        SRAW
+        Sraws
       </Link>
     </Typography>
   );

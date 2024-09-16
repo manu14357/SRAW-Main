@@ -1,4 +1,4 @@
-import React, { useEffect, useState,useCallback } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import {
   Badge,
   Button,
@@ -26,6 +26,8 @@ import {
   AiOutlineLogout,
   AiOutlineUser,
   AiOutlineMenu,
+  AiOutlineUserAdd,  // Icon for Sign Up
+  AiOutlineLogin,    // Icon for Login
 } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import { isLoggedIn, logoutUser } from "../helpers/authHelper";
@@ -63,7 +65,7 @@ const Navbar = () => {
     if (!userId) return;
 
     try {
-      const response = await axios.get(`/api/notifications/${userId}`);
+      const response = await axios.get(`https://api.sraws.com/api/notifications/${userId}`);
       const notificationsData = response.data;
 
       // Calculate unread notifications count
@@ -128,8 +130,6 @@ const Navbar = () => {
     setOpenFindUsers(false);
   };
 
-
-
   useEffect(() => {
     socket.on("receive-message", handleReceiveMessage);
 
@@ -147,8 +147,6 @@ const Navbar = () => {
     }));
   };
 
-
-
   const handleClickMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -164,8 +162,6 @@ const Navbar = () => {
   const handleCloseNotifications = () => {
     setOpenNotifications(false);
   };
-
-  
 
   return (
     <Stack
@@ -198,20 +194,25 @@ const Navbar = () => {
               height: "50px",
             }}
           />
-          <Typography
-            variant={navbarWidth ? "h6" : "h4"}
-            sx={{
-              display: mobile ? "none" : "block",
-              color: "#00A0FD",
-              fontFamily: "Courier PS Bold Italic",
-            }}
-          >
-            SRAWS
-          </Typography>
+    <Typography
+      variant={navbarWidth ? "h6" : "h4"}
+      sx={{
+        display: mobile ? "none" : "block",
+        color: "#00A0FD",
+        fontFamily: "Courier PS Bold Italic",
+        cursor: "pointer", // Makes the text appear clickable
+        "&:hover": {
+          opacity: 0.8, // Optional: Adds a hover effect
+        },
+      }}
+      onClick={() => navigate("/")}
+    >
+      SRAWS
+    </Typography>
         </HorizontalStack>
 
         {!navbarWidth && (
-          <Box component="form" onSubmit={handleSubmit} sx={{ flexGrow: 1, maxWidth: "40%" }}>
+          <Box component="form" onSubmit={handleSubmit} sx={{ flexGrow: 1, maxWidth: "40%" }} >
             <TextField
               size="small"
               label="Search"
@@ -221,7 +222,7 @@ const Navbar = () => {
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
-                    <IconButton type="submit">
+                    <IconButton type="submit" sx={{ color: 'primary.main' }}>
                       <AiOutlineSearch />
                     </IconButton>
                   </InputAdornment>
@@ -233,64 +234,76 @@ const Navbar = () => {
 
         <HorizontalStack>
           {mobile && (
-            <IconButton onClick={handleSearchIcon}>
+            <IconButton onClick={handleSearchIcon} sx={{ color: 'primary.main' }}>
               <AiOutlineSearch />
             </IconButton>
           )}
+          
+          <Tooltip title="Find Users" arrow>
+           <IconButton onClick={handleOpenFindUsers} sx={{ color: 'primary.main' }}>
+             <Tooltip title="Total Users">
+               <AiOutlineUser />
+             </Tooltip>
+           </IconButton>
+          </Tooltip>
 
-          <IconButton onClick={handleOpenFindUsers}>
-            <Tooltip title="Total Users">
-              <AiOutlineUser />
-            </Tooltip>
-          </IconButton>
-
-          <IconButton component={Link} to={"/"}>
-            <Tooltip title="Home">
-              <AiFillHome />
-            </Tooltip>
-          </IconButton>
+          <Tooltip title="Home" arrow>
+           <IconButton component={Link} to={"/"} sx={{ color: 'primary.main' }}>
+             <Tooltip title="Home">
+               <AiFillHome />
+             </Tooltip>
+           </IconButton>
+          </Tooltip>
 
           {user && (
             <>
-              <IconButton component={Link} to={"/Notifyview"}>
-                <Tooltip title="Notifications">
+              <IconButton component={Link} to={"/Notifyview"} sx={{ color: 'primary.main' }}>
+                <Tooltip title="Notifications" arrow>
                   <Badge badgeContent={unreadCount} color="error">
                     <AiOutlineBell />
                   </Badge>
                 </Tooltip>
               </IconButton>
 
-              <IconButton component={Link} to={"/messenger"}> {/* badgeContent={unreadCount} */}
-                <Tooltip title="Messages">
+              <IconButton component={Link} to={"/messenger"} sx={{ color: 'primary.main' }}> {/* badgeContent={unreadCount} */}
+                <Tooltip title="Messages" arrow>
                   <Badge  color="error">  
                     <AiFillMessage />
                   </Badge>
                 </Tooltip>
               </IconButton>
-
-              <IconButton component={Link} to={"/users/" + username}>
+            <Tooltip title="Profile" arrow>
+              <IconButton component={Link} to={"/users/" + username} sx={{ color: 'primary.main' }}>
                 <Tooltip title="Profile">
                   <UserAvatar width={30} height={30} username={user.username} />
                 </Tooltip>
               </IconButton>
-              <IconButton onClick={handleClickMenu} sx={{ fontSize: "1.5rem" }}>
-                <Tooltip title="Menu">
-                  <AiOutlineMenu />
-                </Tooltip>
-              </IconButton>
+            </Tooltip>
             </>
           )}
 
-          {!user && (
-            <>
-              <Button variant="text" sx={{ minWidth: 80 }} href="/signup">
-                Sign Up
-              </Button>
-              <Button variant="text" sx={{ minWidth: 65 }} href="/login">
-                Login
-              </Button>
-            </>
-          )}
+{!user && (
+  <>
+    <Tooltip title="Sign Up" arrow>
+      <IconButton component={Link} to="/signup" sx={{ color: 'primary.main' }}>
+        <AiOutlineUserAdd size={25} />
+      </IconButton>
+    </Tooltip>
+    <Tooltip title="Login" arrow>
+      <IconButton component={Link} to="/login" sx={{ color: 'primary.main' }}>
+        <AiOutlineLogin size={25} />
+      </IconButton>
+    </Tooltip>
+  </>
+)}
+
+
+          {/* Menu visible regardless of login state */}
+          <IconButton onClick={handleClickMenu} sx={{ fontSize: "1.5rem" }} sx={{ color: 'primary.main' }}>
+            <Tooltip title="Menu">
+              <AiOutlineMenu />
+            </Tooltip>
+          </IconButton>
 
           <Menu
             anchorEl={anchorEl}
@@ -305,13 +318,15 @@ const Navbar = () => {
             <MenuItem onClick={() => navigate("/terms-of-service")}>Terms of Service</MenuItem>
             <MenuItem onClick={() => navigate("/cookie-policy")}>Cookie Policy</MenuItem>
             <MenuItem onClick={() => navigate("/copyright-policy")}>Copyright Policy</MenuItem>
-            
-            <MenuItem onClick={() => setOpenLogoutDialog(true)}>Logout</MenuItem>
+            {user && (
+              <MenuItem onClick={() => setOpenLogoutDialog(true)}>
+                <AiOutlineLogout style={{ marginRight: 8 }} />
+                Logout
+              </MenuItem>
+            )}
           </Menu>
         </HorizontalStack>
       </Stack>
-
-      
 
       {/* Notifications Dialog */}
       {user && (
@@ -353,7 +368,6 @@ const Navbar = () => {
         fullWidth
         maxWidth="md"
       >
-        
         <DialogContent>
           <FindUsers />
         </DialogContent>
@@ -362,9 +376,8 @@ const Navbar = () => {
         </DialogActions>
       </Dialog>
 
-
-
-            {navbarWidth && searchIcon && (
+      {/* Search box in mobile view */}
+      {navbarWidth && searchIcon && (
         <Box component="form" onSubmit={handleSubmit} px={2} mt={1}>
           <TextField
             size="small"

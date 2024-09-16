@@ -451,6 +451,40 @@ const createNotification = async (type, postId, senderId, recipientId, commentId
   }
 };
 
+// New Feedback related endpoints
+const submitFeedback = async (req, res) => {
+  try {
+    const feedback = new Feedback(req.body);
+    await feedback.save();
+    res.status(201).json(feedback);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+const getAllFeedbacks = async (req, res) => {
+  try {
+    const feedbacks = await Feedback.find();
+    res.json(feedbacks);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch feedbacks' });
+  }
+};
+
+const replyToFeedback = async (req, res) => {
+  try {
+    const { feedbackId, reply } = req.body;
+    const feedback = await Feedback.findById(feedbackId);
+    if (!feedback) return res.status(404).json({ error: 'Feedback not found' });
+
+    feedback.replies.push({ reply });
+    await feedback.save();
+    res.status(200).json(feedback);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 
 module.exports = {
   createPost,
@@ -463,4 +497,8 @@ module.exports = {
   getUserLikes,
   getUserLikedPosts,
   createLikeNotification,
+  submitFeedback,
+  getAllFeedbacks,
+  replyToFeedback,
+
 };

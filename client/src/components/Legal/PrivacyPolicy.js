@@ -240,7 +240,7 @@ const PrivacyPolicy = () => {
               If you have any questions or concerns about this Privacy Policy or our data practices, please contact us at:
             </Typography>
             <Typography variant="body1" paragraph>
-              Contact us: <Link href="mailto:support@sraws.com" color="inherit">support@sraws.com</Link>
+              Contact us: <Link href="mailto:support@team.sraws.com" color="inherit">support@team.sraws.com</Link>
             </Typography>
           </Box>
         </Box>

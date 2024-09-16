@@ -47,13 +47,12 @@ const updatePost = async (postId, user, data) => {
 // Function to delete a post by its ID
 const deletePost = async (postId, user) => {
   try {
-    const res = await fetch(BASE_URL + "api/posts/" + postId, {
-      method: "DELETE",
+    const res = await axios.delete(`${BASE_URL}api/posts/${postId}`, {
       headers: {
         "x-access-token": user.token,
       },
     });
-    return res.json();
+    return res.data;
   } catch (err) {
     console.log(err);
   }
@@ -234,21 +233,31 @@ const getUserLikes = async (postId, anchor) => {
 
 
 
-const reportPost = async (postId, user) => {
+const reportPost = async (postId, user, reason) => {
   if (!user || !user.token) {
     throw new Error('User is not logged in');
   }
 
   try {
-    const response = await axios.post(`/api/posts/${postId}/report`, { reporter: user.username }, {
+    const response = await axios.post(`${BASE_URL}api/posts/${postId}/report`, 
+    { reporter: user.username, reason: reason },  // Include reason in the request body
+    {
       headers: { Authorization: `Bearer ${user.token}` },
     });
     return response.data;
   } catch (error) {
-    console.error('Error reporting post:', error);
+    if (error.response) {
+      console.error('Server Error:', error.response.data);
+    } else if (error.request) {
+      console.error('No response received:', error.request);
+    } else {
+      console.error('Error:', error.message);
+    }
     throw error;
   }
 };
+
+
 
 const getUserPosts = async (userId, token) => {
   try {
@@ -309,6 +318,50 @@ const markNotificationAsRead = async (notificationId) => {
   }
 };
 
+// Function to submit feedback
+const submitFeedback = async (feedback, token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}api/feedback/submit`, feedback, {
+      headers: {
+        "x-access-token": token,
+      },
+    });
+    return res.data;
+  } catch (err) {
+    console.error('Failed to submit feedback:', err);
+    return { error: err.response.data.message || 'Failed to submit feedback' };
+  }
+};
+
+// Function to get all feedbacks
+const getFeedbacks = async (token) => {
+  try {
+    const res = await axios.get(`${BASE_URL}api/feedback/all`, {
+      headers: {
+        "x-access-token": token,
+      },
+    });
+    return res.data;
+  } catch (err) {
+    console.error('Failed to fetch feedbacks:', err);
+  }
+};
+
+// Function to reply to feedback
+const replyToFeedback = async (feedbackId, reply, token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}api/feedback/reply`, { feedbackId, reply }, {
+      headers: {
+        "x-access-token": token,
+      },
+    });
+    return res.data;
+  } catch (err) {
+    console.error('Failed to reply to feedback:', err);
+    return { error: err.response.data.message || 'Failed to reply to feedback' };
+  }
+};
+
 
 export {
   getPost,
@@ -331,6 +384,9 @@ export {
   getUserPosts,
   uploadMedia,
   markNotificationAsRead,
- getNotifications,
+  getNotifications,
+  submitFeedback,
+  getFeedbacks,
+  replyToFeedback,
 
 };

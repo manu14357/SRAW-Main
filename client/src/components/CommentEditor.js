@@ -1,4 +1,4 @@
-import { Button, Card, Stack, TextField, Typography } from "@mui/material";
+import { Button, Card, Stack, TextField, Typography, CircularProgress } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -6,8 +6,10 @@ import { createComment } from "../api/posts";
 import { isLoggedIn } from "../helpers/authHelper";
 import ErrorAlert from "./ErrorAlert";
 import HorizontalStack from "./util/HorizontalStack";
+import { useTheme } from "@mui/material/styles";
 
 const CommentEditor = ({ label, comment, addComment, setReplying }) => {
+  const theme = useTheme();
   const [formData, setFormData] = useState({
     content: "",
   });
@@ -37,24 +39,30 @@ const CommentEditor = ({ label, comment, addComment, setReplying }) => {
     if (data.error) {
       setError(data.error);
     } else {
-      formData.content = "";
+      setFormData({ content: "" });
       setReplying && setReplying(false);
       addComment(data);
     }
   };
 
-  const handleFocus = (e) => {
+  const handleFocus = () => {
     !isLoggedIn() && navigate("/login");
   };
 
   return (
-    <Card>
+    <Card
+      sx={{
+        
+        borderRadius: 2,
+        p: 2,
+        backgroundColor: theme.palette.background.paper,
+      }}
+    >
       <Stack spacing={2}>
         <HorizontalStack justifyContent="space-between">
-          <Typography variant="h5">
-            {comment ? <>Reply</> : <>Comment</>}
+          <Typography variant="h6" color="text.primary">
+            {comment ? "Reply" : "Comment"}
           </Typography>
-          
         </HorizontalStack>
 
         <Box component="form" onSubmit={handleSubmit}>
@@ -66,25 +74,34 @@ const CommentEditor = ({ label, comment, addComment, setReplying }) => {
             required
             name="content"
             sx={{
-              backgroundColor: "white",
+              backgroundColor: theme.palette.background.default,
+              borderRadius: 1,
+              "& .MuiOutlinedInput-root": {
+                borderRadius: 1,
+              },
             }}
             onChange={handleChange}
             onFocus={handleFocus}
             value={formData.content}
           />
 
-          <ErrorAlert error={error} sx={{ my: 4 }} />
+          <ErrorAlert error={error} sx={{ my: 2 }} />
           <Button
-            variant="outlined"
+            variant="contained"
             type="submit"
             fullWidth
             disabled={loading}
             sx={{
-              backgroundColor: "white",
               mt: 2,
+              borderRadius: 1,
+              textTransform: "none",
             }}
           >
-            {loading ? <div>Submitting</div> : <div>Submit</div>}
+            {loading ? (
+              <CircularProgress size={24} color="inherit" />
+            ) : (
+              "Submit"
+            )}
           </Button>
         </Box>
       </Stack>

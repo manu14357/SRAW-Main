@@ -1,11 +1,60 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Card, Typography, Button, Grid, Divider, Box } from "@mui/material";
 import UserAvatar from "../UserAvatar";
 import { isLoggedIn } from "../../helpers/authHelper";
-import { MdReportProblem } from "react-icons/md";
+import { MdReportProblem, MdVerifiedUser } from "react-icons/md";
 
 const UserProfile = () => {
   const user = isLoggedIn();
+  
+  // Array of random messages for the user
+  const userMessages = [
+    {
+      title: "Welcome Message",
+      content: `Welcome, ${user?.username}! Share your experiences and help others stay informed about scams and fraud. Together, we can stay vigilant and protected.`,
+    },
+    {
+      title: "Stay Informed",
+      content: `Hi, ${user?.username}! Stay informed by reporting scams or fraudulent activities. Every report helps the community stay safe.`,
+    },
+    {
+      title: "Your Safety Matters",
+      content: `${user?.username}, your safety matters to us! Report any scams or suspicious activities you encounter.`,
+    },
+    {
+      title: "Protect the Community",
+      content: `Help protect our community by reporting any scams, frauds, or suspicious activities, ${user?.username}.`,
+    }
+  ];
+
+  // Array of random report messages
+  const reportMessages = [
+    {
+      title: "Report Scam or Fraud",
+      content: "If you encounter suspicious activities, report them immediately to help protect our community.",
+    },
+    {
+      title: "Flag Suspicious Activity",
+      content: "Notice anything unusual? Flag it right away to safeguard everyone from scams or fraud.",
+    },
+    {
+      title: "Stay Safe",
+      content: "Keep yourself and others safe by reporting scams and fraud as soon as you encounter them.",
+    }
+  ];
+
+  // State for random content selection
+  const [selectedUserMessage, setSelectedUserMessage] = useState(null);
+  const [selectedReportMessage, setSelectedReportMessage] = useState(null);
+
+  useEffect(() => {
+    // Randomly select a user message and a report message each time component renders
+    const randomUserMessage = userMessages[Math.floor(Math.random() * userMessages.length)];
+    const randomReportMessage = reportMessages[Math.floor(Math.random() * reportMessages.length)];
+
+    setSelectedUserMessage(randomUserMessage);
+    setSelectedReportMessage(randomReportMessage);
+  }, []);
 
   return (
     <Card variant="outlined" sx={{ p: 2, mb: 2, borderRadius: 1 }}>
@@ -16,27 +65,37 @@ const UserProfile = () => {
             <UserAvatar width={80} height={80} username={user.username} />
           </Grid>
 
-          {/* User Information */}
+          {/* Random User Information */}
           <Grid item xs={12} md={8}>
-            <Typography variant="h6" gutterBottom>
+          <Typography 
+            variant="h6" 
+             gutterBottom 
+             sx={{ 
+             fontSize: '1.2rem', 
+             letterSpacing: '0.1rem', 
+             color: 'primary.main', // Custom color (blue shade)
+             textTransform: 'uppercase' 
+              }}
+            >
               {user.username}
-            </Typography>
-            <Typography variant="body2" color="textSecondary">
-              Welcome, {user.username}! You can report scams or fraud here. Stay vigilant against fraudulent activities.
+           </Typography>
+
+            <Typography variant="h8" color="textSecondary">
+              {selectedUserMessage?.content}
             </Typography>
           </Grid>
 
-          {/* Report Scam/Fraud */}
+          {/* Report Scam/Fraud Section */}
           <Grid item xs={12}>
             <Divider sx={{ my: 2 }} />
             <Box sx={{ display: "flex", alignItems: "center" }}>
-              <MdReportProblem fontSize="large" sx={{ mr: 1 }} />
-              <Typography variant="subtitle2" sx={{ fontWeight: "bold", ml: 1 }}>
-                Report Scam or Fraud
+            <MdReportProblem fontSize="large" sx={{ mr: 1 }} style={{ color: "#f44336" }} />
+             <Typography variant="subtitle1" sx={{ fontWeight: "bold", ml: 1, color: "#f44336" }}>
+                {selectedReportMessage?.title}
               </Typography>
             </Box>
             <Typography variant="body2" color="textSecondary" sx={{ mt: 1 }}>
-              If you encounter suspicious activities, report them immediately to help protect our community.
+              {selectedReportMessage?.content}
             </Typography>
           </Grid>
         </Grid>

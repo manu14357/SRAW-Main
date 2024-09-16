@@ -1,4 +1,4 @@
-import { Button, IconButton, Typography, useTheme } from "@mui/material";
+import { Button, IconButton, Typography, useTheme, Menu, MenuItem } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
 import { AiFillEdit, AiOutlineLine, AiOutlinePlus } from "react-icons/ai";
@@ -11,9 +11,9 @@ import { deleteComment, updateComment } from "../api/posts";
 import ContentUpdateEditor from "./ContentUpdateEditor";
 import Markdown from "./Markdown";
 import { MdCancel } from "react-icons/md";
-import { BiReply, BiTrash } from "react-icons/bi";
 import { BsReplyFill } from "react-icons/bs";
 import Moment from "react-moment";
+import { BiTrash,BiDotsHorizontal } from "react-icons/bi";
 
 const Comment = (props) => {
   const theme = useTheme();
@@ -24,6 +24,7 @@ const Comment = (props) => {
   const [replying, setReplying] = useState(false);
   const [editing, setEditing] = useState(false);
   const [comment, setComment] = useState(commentData || {});
+  const [anchorEl, setAnchorEl] = useState(null);
   const user = isLoggedIn();
   const isAuthor = user && user.userId === comment?.commenter?._id;
   const navigate = useNavigate();
@@ -62,6 +63,24 @@ const Comment = (props) => {
         console.error("Error deleting comment:", error);
       }
     }
+  };
+
+  const handleMenuClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleEditClick = () => {
+    setEditing(!editing);
+    handleMenuClose();
+  };
+
+  const handleDeleteClick = () => {
+    handleDelete();
+    handleMenuClose();
   };
 
   let style = {
@@ -134,26 +153,13 @@ const Comment = (props) => {
                   )}
                 </IconButton>
                 {user && (isAuthor || user.isAdmin) && (
-                  <HorizontalStack spacing={1}>
-                    <IconButton
-                      variant="text"
-                      size="small"
-                      onClick={() => setEditing(!editing)}
-                    >
-                      {editing ? (
-                        <MdCancel color={iconColor} />
-                      ) : (
-                        <AiFillEdit color={iconColor} />
-                      )}
-                    </IconButton>
-                    <IconButton
-                      variant="text"
-                      size="small"
-                      onClick={handleDelete}
-                    >
-                      <BiTrash color={theme.palette.error.main} />
-                    </IconButton>
-                  </HorizontalStack>
+                  <IconButton
+                    variant="text"
+                    size="small"
+                    onClick={handleMenuClick}
+                  >
+                    <BiDotsHorizontal color={iconColor} />
+                  </IconButton>
                 )}
               </HorizontalStack>
             )}
@@ -198,6 +204,20 @@ const Comment = (props) => {
           </Box>
         )}
       </Box>
+      <Menu
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleMenuClose}
+      >
+        <MenuItem onClick={handleEditClick}>
+          <AiFillEdit color={iconColor} style={{ marginRight: 8 }} />
+          Edit
+        </MenuItem>
+        <MenuItem onClick={handleDeleteClick}>
+          <BiTrash color={theme.palette.error.main} style={{ marginRight: 8 }} />
+          Delete
+        </MenuItem>
+      </Menu>
     </Box>
   );
 };

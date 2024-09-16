@@ -203,6 +203,33 @@ const createNotification = async (type, postId, senderId, recipientId, commentId
   }
 };
 
+const replyToComment = async (req, res) => {
+  try {
+    const { content, parentCommentId, recipientUserId } = req.body;
+    const commenterId = req.user._id;
+
+    const replyComment = new Comment({
+      commenter: commenterId,
+      post: parentCommentId,
+      content,
+      parent: parentCommentId,
+    });
+    await replyComment.save();
+
+    const notification = new Notification({
+      type: 'reply',
+      sender: commenterId,
+      recipient: recipientUserId,
+      comment: replyComment._id,
+    });
+    await notification.save();
+
+    res.status(201).json(replyComment);
+  } catch (error) {
+    console.error('Error replying to comment:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
 
 module.exports = {
   createComment,
@@ -210,4 +237,5 @@ module.exports = {
   getUserComments,
   updateComment,
   deleteComment,
+  replyToComment,
 };

@@ -9,8 +9,9 @@ import PostCard from "./PostCard";
 import SortBySelect from "./SortBySelect";
 import HorizontalStack from "./util/HorizontalStack";
 import AdContainer from "./views/AdContainer";
+import MediaAdContainer from "./views/MediaAdContainer";
 
-const adsData = [];
+const adsData = []; // Add ad data if available
 
 const PostBrowser = (props) => {
   const [posts, setPosts] = useState([]);
@@ -19,6 +20,7 @@ const PostBrowser = (props) => {
   const [end, setEnd] = useState(false);
   const [sortBy, setSortBy] = useState("-createdAt");
   const [count, setCount] = useState(0);
+  const [fetchTriggered, setFetchTriggered] = useState(false);
   const user = isLoggedIn();
 
   const [search] = useSearchParams();
@@ -59,8 +61,15 @@ const PostBrowser = (props) => {
 
     setLoading(false);
     if (!data.error) {
-      setPosts((prevPosts) => [...prevPosts, ...data.data]);
+      setPosts((prevPosts) => {
+        const existingIds = new Set(prevPosts.map(post => post._id));
+        const newPosts = data.data.filter(post => !existingIds.has(post._id));
+        return [...prevPosts, ...newPosts];
+      });
       setCount(data.count);
+      if (data.data.length > 0) {
+        setFetchTriggered(true);
+      }
     }
   };
 
@@ -77,22 +86,26 @@ const PostBrowser = (props) => {
 
   useEffect(() => {
     const handleScroll = () => {
+      if (loading || end) return; // Don't trigger if already loading or end of posts
+
       const scrollTop = window.scrollY || window.pageYOffset;
       const windowHeight = window.innerHeight || document.documentElement.clientHeight;
       const docHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
 
-      if (
-        scrollTop + windowHeight >= docHeight - 50 && // Trigger when close to bottom
-        !loading &&
-        !end
-      ) {
+      if (scrollTop + windowHeight >= docHeight - 50) {
         fetchPosts();
       }
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [posts, loading, end]);
+  }, [loading, end]);
+
+  useEffect(() => {
+    if (posts.length >= 5 && !fetchTriggered) {
+      fetchPosts();
+    }
+  }, [posts, fetchTriggered]);
 
   const handleSortBy = (e) => {
     const newSortName = e.target.value;
@@ -157,7 +170,8 @@ const PostBrowser = (props) => {
           <React.Fragment key={post._id}>
             <PostCard preview="primary" post={post} removePost={removePost} />
             {/* Display an ad every 15 posts */}
-            {i > 0 && i % 15 === 0 && <AdContainer ad={getRandomAd()} />}
+            {i > 0 && i % 12 === 0 && <AdContainer ad={getRandomAd()} />}
+            {i > 0 && i % 20 === 0 && <MediaAdContainer ad={getRandomAd()} />}
           </React.Fragment>
         ))}
 

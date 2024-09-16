@@ -15,7 +15,7 @@ const TermsOfService = () => {
         <meta property="og:description" content="Read our Terms of Service to understand your rights and responsibilities when using our platform." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://sraws.com/terms-of-service" />
-        <meta property="og:image" content="https://sraws.com/images/terms-of-service.jpg" />
+        <meta property="og:image" content="" />
         <meta property="og:image:alt" content="Terms of Service" />
       </Helmet>
       <Navbar />

@@ -8,7 +8,7 @@ const CookiePolicy = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <Helmet>
-        <title>Cookie Policy - Your Website Name</title>
+        <title>Cookie Policy - Sraws</title>
         <meta name="description" content="Learn about the types of cookies we use, how we use them, and how you can manage your cookie preferences." />
         <meta name="keywords" content="Cookie Policy, Cookies, Privacy, User Data, Website Policy" />
         <meta name="author" content="SRAWS" />
@@ -95,10 +95,12 @@ const CookiePolicy = () => {
             <Typography variant="h4" gutterBottom sx={{ color: 'primary.main' }}>
               6. Contact Information
             </Typography>
+            
             <Typography variant="body1" paragraph>
-              Email: support@example.com<br />
-              Community Forum: [Insert forum link]
+                Email: support@team.sraws.com<br />
+                Community Forum: <a href="https://sraws.com/ChatPage" target="_blank" rel="noopener noreferrer">SRAWS Community</a>
             </Typography>
+
           </Box>
 
           <Divider sx={{ my: 4 }} />

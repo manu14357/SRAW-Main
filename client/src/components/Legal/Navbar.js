@@ -18,7 +18,9 @@ import {
   Slide,
   useScrollTrigger,
 } from '@mui/material';
-import { Menu, Close, Home, Info, Policy, Security, Help } from '@mui/icons-material';
+
+import { Menu, Close, Home, Info, Policy, Security, Help, Gavel } from '@mui/icons-material';
+
 import { styled } from '@mui/system';
 import srawsmainlogo from "../Assets/srawsmainlogo.png";
 import HelpOutline from '@mui/icons-material/HelpOutline';
@@ -122,7 +124,7 @@ const Sidebar = ({ open, onClose }) => (
           <ListItemText primary="Cookie Policy" />
         </SidebarListItem>
         <SidebarListItem button component="a" href="/copyright-policy" onClick={onClose}>
-          <Help sx={{ marginRight: '10px' }} />
+          <Gavel sx={{ marginRight: '10px' }} />
           <ListItemText primary="Copyright Policy" />
         </SidebarListItem>
       </List>

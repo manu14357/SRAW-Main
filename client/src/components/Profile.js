@@ -41,7 +41,7 @@ const Profile = (props) => {
   useEffect(() => {
     if (props.profile) {
       setUser(props.profile.user);
-      setShareUrl(`http://sraws.com:3000/users/${props.profile.user.username}`);
+      setShareUrl(`http://localhost:3000/users/${props.profile.user.username}`);
     }
   }, [props.profile]);
 
@@ -113,7 +113,7 @@ const Profile = (props) => {
                 display: "inline-block",
                 textAlign: "center"
               }}
-              onClick={handleSocialPointsDialogOpen} // Open dialog on click
+              
             />
             <Typography
               variant="body2"

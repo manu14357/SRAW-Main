@@ -56,7 +56,7 @@ const Help = () => {
   useEffect(() => {
     const fetchFeedbacks = async () => {
       try {
-        const response = await axios.get('/api/feedback/all');
+        const response = await axios.get('https://api.sraws.com/api/feedback/all');
         setFeedbacks(response.data);
         setFilteredFeedbacks(response.data); // Initialize with all feedbacks
       } catch (error) {
@@ -70,7 +70,7 @@ const Help = () => {
   useEffect(() => {
     const fetchChatMessages = async () => {
       try {
-        const response = await axios.get('/api/chat/messages');
+        const response = await axios.get('https://api.sraws.com/api/chat/messages');
         setChatMessages(response.data || []); // Ensure chatMessages is always an array
         setFilteredChatMessages(response.data || []); // Initialize with all chat messages
       } catch (error) {
@@ -107,7 +107,7 @@ const Help = () => {
   const handleFeedbackSubmit = async (data) => {
     setIsLoading(true);
     try {
-      await axios.post('/api/feedback/submit', {
+      await axios.post('https://api.sraws.com/api/feedback/submit', {
         name: data.name,
         title: data.title,
         feedback: editorState.getCurrentContent().getPlainText(),
@@ -118,7 +118,7 @@ const Help = () => {
       reset();
       setEditorState(EditorState.createEmpty());
       setOpenFeedbackDialog(false);
-      const response = await axios.get('/api/feedback/all');
+      const response = await axios.get('https://api.sraws.com/api/feedback/all');
       setFeedbacks(response.data);
       setFilteredFeedbacks(response.data); // Update filtered feedbacks
     } catch (error) {
@@ -136,7 +136,7 @@ const Help = () => {
 
   const handleChatMessageSend = async () => {
     try {
-      await axios.post('/api/chat/send', { message, sender: userName || 'Anonymous' });
+      await axios.post('https://api.sraws.com/api/chat/send', { message, sender: userName || 'Anonymous' });
       const newMessage = { text: message, sender: userName || 'You', createdAt: new Date(), replies: [] };
       setChatMessages(prevMessages => [...prevMessages, newMessage]);
       setFilteredChatMessages(prevMessages => [...prevMessages, newMessage]); // Update filtered messages
@@ -150,7 +150,7 @@ const Help = () => {
 
   const handleChatReply = async (messageId) => {
     try {
-      await axios.post('/api/chat/reply', { messageId, reply: { message }, sender: userName || 'Anonymous' });
+      await axios.post('https://api.sraws.com/api/chat/reply', { messageId, reply: { message }, sender: userName || 'Anonymous' });
       setChatMessages(prevMessages => prevMessages.map(msg =>
         msg._id === messageId ? { ...msg, replies: [...(msg.replies || []), { text: message, sender: userName || 'Anonymous', createdAt: new Date() }] } : msg
       ));
@@ -180,9 +180,9 @@ const Help = () => {
         <meta name="description" content="Find answers to frequently asked questions about SRAWS, including how to report scams, search for users, and more." />
         <meta property="og:title" content="Help Center - SRAWS" />
         <meta property="og:description" content="Find answers to frequently asked questions about SRAWS, including how to report scams, search for users, and more." />
-        <meta property="og:url" content="https://sraws.com/Help" />
+        <meta property="og:url" content="https://sraws.mrcitsoft.com/help" />
         <meta property="og:image" content="URL_TO_IMAGE" />
-        <link rel="canonical" href="https://sraws.com/Help" />
+        <link rel="canonical" href="https://sraws.mrcitsoft.com/help" />
       </Helmet>
     <Navbar />
     <Container maxWidth="md" sx={{ mt: 4, mb: 4 }}>
@@ -428,16 +428,7 @@ const Help = () => {
   </AccordionDetails>
 </Accordion>
 
-<Accordion expanded={expanded === 'panel10'} onChange={handleAccordionChange('panel10')}>
-  <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-    <Typography variant="body1"sx={{ fontWeight: 'bold' }}>How do I manage my account settings and privacy?</Typography>
-  </AccordionSummary>
-  <AccordionDetails>
-    <Typography>
-      You can manage your account settings and privacy preferences by logging into your account and navigating to the "Profile/Privacy Settings" section. Here, you can update your information, adjust privacy settings, and review your activity on the platform.
-    </Typography>
-  </AccordionDetails>
-</Accordion>
+
 
 <Accordion expanded={expanded === 'panel11'} onChange={handleAccordionChange('panel11')}>
   <AccordionSummary expandIcon={<ExpandMoreIcon />}>
@@ -456,7 +447,7 @@ const Help = () => {
   </AccordionSummary>
   <AccordionDetails>
     <Typography>
-      If you have any further questions or encounter any issues, you can contact us through the "Help" page, or send us an email at support@sraws.com. We're here to help!
+      If you have any further questions or encounter any issues, you can contact us through the "Help" page, or send us an email at support@team.sraws.com. We're here to help!
     </Typography>
   </AccordionDetails>
 </Accordion>
@@ -501,6 +492,18 @@ const Help = () => {
   <AccordionDetails>
     <Typography>
       By using SRAWS, you agree to our Terms of Service, which outlines your rights and responsibilities as a user. SRAWS does not assume liability for the content submitted by users, and we encourage you to report any violations or concerns.
+    </Typography>
+  </AccordionDetails>
+</Accordion>
+
+<Accordion expanded={expanded === 'panel28'} onChange={handleAccordionChange('panel28')}>
+  <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+    <Typography variant="body1" sx={{ fontWeight: 'bold' }}>How can I contact support if I need more help?</Typography>
+  </AccordionSummary>
+  <AccordionDetails>
+    <Typography>
+      If you need further assistance or have more questions, please contact our support team at: 
+      <a href="mailto:support@team.sraws.com">support@team.sraws.com</a>.
     </Typography>
   </AccordionDetails>
 </Accordion>
@@ -598,6 +601,19 @@ const Help = () => {
       ) : (
         <Typography>No feedbacks found.</Typography>
       )}
+
+
+<Box sx={{ mt: 4, textAlign: 'center' }}>
+  <Typography variant="h6" gutterBottom>
+    Need More Help?
+  </Typography>
+  <Typography>
+    If you have any questions or need further assistance, please reach out to our support team at:
+  </Typography>
+  <Typography variant="body1" sx={{ fontWeight: 'bold' }}>
+    <a href="mailto:support@sraws.com">support@team.sraws.com</a>
+  </Typography>
+</Box>
 
 
 

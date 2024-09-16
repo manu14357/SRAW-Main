@@ -11,7 +11,7 @@ const UserEntry = ({ username }) => {
         <UserAvatar width={30} height={30} username={username} />
         <Typography>{username}</Typography>
       </HorizontalStack>
-      <Link to={"/users/" + username}>View</Link>
+      <Link to={"/users/" + username}>View Profile</Link>
     </HorizontalStack>
   );
 };

@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const Notification = require('../models/Notification'); // Adjust path as needed
-const User = require('../models/User'); // Import the User model
-const Post = require('../models/Post'); // Import the Post model
-const Comment = require('../models/Comment'); // Import the Comment model
-const Message = require('../models/Message'); // Import the Message model
+const Notification = require('../models/Notification');
+const User = require('../models/User');
+const Post = require('../models/Post');
+const Comment = require('../models/Comment');
+const Message = require('../models/Message');
 
 // Fetch notifications for a specific user
 router.get('/notifications/:userId', async (req, res) => {
@@ -16,10 +16,10 @@ router.get('/notifications/:userId', async (req, res) => {
 
   try {
     const notifications = await Notification.find({ recipient: userId })
-      .populate('sender', 'username') // Populate sender field with User model
-      .populate('post') // Populate post field with Post model
-      .populate('comment') // Populate comment field with Comment model
-      .populate('message'); // Populate message field with Message model
+      .populate('sender', 'username')
+      .populate('post')
+      .populate('comment')
+      .populate('message');
 
     res.status(200).json(notifications);
   } catch (error) {
@@ -51,38 +51,6 @@ router.put('/notifications/:notificationId/read', async (req, res) => {
     res.status(200).json({ message: 'Notification marked as read' });
   } catch (err) {
     console.error('Error marking notification as read:', err);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-});
-
-// Route to get unread messages count for a user
-router.get('/messages/unread-count/:userId', async (req, res) => {
-  const userId = req.params.userId;
-
-  if (!userId) {
-    return res.status(400).json({ error: 'User ID is required' });
-  }
-
-  try {
-    const unreadCount = await Message.countDocuments({ 
-      recipient: userId, 
-      read: false 
-    });
-    res.status(200).json({ count: unreadCount });
-  } catch (error) {
-    console.error('Error fetching unread messages count:', error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-});
-
-// Mark a single message as read
-router.put('/messages/:messageId/read', async (req, res) => {
-  try {
-    const { messageId } = req.params;
-    await Message.findByIdAndUpdate(messageId, { $set: { read: true } });
-    res.status(200).json({ message: 'Message marked as read' });
-  } catch (err) {
-    console.error('Error marking message as read:', err);
     res.status(500).json({ error: 'Internal server error' });
   }
 });

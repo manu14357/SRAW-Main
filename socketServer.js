@@ -21,6 +21,13 @@ const socketServer = (socket) => {
   const userId = socket.decoded.userId;
   users.push({ userId, socketId: socket.id });
 
+
+
+  // Notify others when a user is online
+  socket.on("online", () => {
+    socket.broadcast.emit("user-online", userId);
+  });
+
   socket.on("send-message", (recipientUserId, username, content) => {
     const recipient = users.find((user) => user.userId == recipientUserId);
     if (recipient) {
@@ -32,7 +39,10 @@ const socketServer = (socket) => {
 
   socket.on("disconnect", () => {
     users = users.filter((user) => user.userId != userId);
+    socket.broadcast.emit("user-offline", userId); // Notify others when a user goes offline
   });
 };
+
+
 
 module.exports = { socketServer, authSocket };

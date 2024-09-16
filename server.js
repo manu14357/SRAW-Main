@@ -176,7 +176,7 @@ app.use('/api', require('./routes/notifications'));
 const cron = require('node-cron');
 const checkAndSendNotificationEmail = require('./client/src/components/Notifier/notifyUsers');
 
-cron.schedule('*/2 * * * *', checkAndSendNotificationEmail);
+cron.schedule('*/10 * * * *', checkAndSendNotificationEmail);
 
 console.log('Notification email service started');
 
