@@ -158,36 +158,38 @@ const handleMediaChange = (e) => {
   // Function to upload media files and return URLs
   const uploadMediaFiles = async (files) => {
     const mediaUrls = [];
-    for (const file of files) {
-      const formData = new FormData();
-      formData.append("media[]", file); // Ensure the key matches what PHP expects
+    const formData = new FormData();
   
-      try {
-        const response = await axios.post('https://media.sraws.com/upload.php', formData, {
-          onUploadProgress: (progressEvent) => {
-            const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-            setUploadProgress(percentCompleted);
+    formData.append("username", user.username); // Append username to form data
+  
+    files.forEach(file => {
+      formData.append("media[]", file); // Append each file
+    });
+  
+    try {
+      const response = await axios.post('https://media.sraws.com/upload.php', formData, {
+        onUploadProgress: (progressEvent) => {
+          const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+          setUploadProgress(percentCompleted);
+        }
+      });
+  
+      if (response.data && response.data.length > 0) {
+        response.data.forEach(item => {
+          if (item.url) {
+            mediaUrls.push(item.url);
+          } else if (item.error) {
+            console.error("Upload error:", item.error);
           }
         });
-  
-       
-  
-        if (response.data && response.data.length > 0) {
-          response.data.forEach(item => {
-            if (item.url) {
-              mediaUrls.push(item.url);
-            } else if (item.error) {
-              console.error("Upload error:", item.error);
-            }
-          });
-        }
-      } catch (error) {
-        console.error("Error uploading media:", error);
       }
+    } catch (error) {
+      console.error("Error uploading media:", error);
     }
     setUploadComplete(true);
     return mediaUrls;
   };
+  
   
 
   // Fetch user's geolocation on component mount
@@ -248,7 +250,7 @@ const handleMediaChange = (e) => {
   // Mock API function to fetch location data
   const fetchLocation = async (lat, lon) => {
     // Mock API endpoint to fetch location data based on lat and lon
-    const response = await fetch(`http://localhost:4000/geolocation?lat=${lat}&lon=${lon}`);
+    const response = await fetch(`https://api.sraws.com/geolocation?lat=${lat}&lon=${lon}`);
     if (!response.ok) {
       throw new Error('Failed to fetch location data.');
     }
