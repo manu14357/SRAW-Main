@@ -8,10 +8,10 @@ const TermsOfService = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <Helmet>
-        <title>Terms of Service | SRAWS</title>
+        <title>Terms of Service | Sraws</title>
         <meta name="description" content="Read our Terms of Service to understand your rights and responsibilities when using our platform." />
         <meta name="keywords" content="Terms of Service, user agreement, platform rules, legal terms" />
-        <meta property="og:title" content="Terms of Service | SRAWS" />
+        <meta property="og:title" content="Terms of Service | Sraws" />
         <meta property="og:description" content="Read our Terms of Service to understand your rights and responsibilities when using our platform." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://sraws.com/terms-of-service" />

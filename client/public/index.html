@@ -6,27 +6,27 @@
   <meta name="theme-color" content="#000000" />
 
   <!-- Primary Meta Tags -->
-  <title>SRAWS - Scam Reporting & Alert Platform</title>
-  <meta name="title" content="SRAWS - Post and Comment Platform">
-  <meta name="description" content="Post and comment platform for SRAW">
-  <meta name="keywords" content="SRAW, post, comment, platform, social media, community">
+  <title>Sraws - Scam Reporting & Alert Platform</title>
+  <meta name="title" content="Sraws - Post and Comment Platform">
+  <meta name="description" content="Post and comment platform for Sraws">
+  <meta name="keywords" content="Sraws, post, comment, platform, social media, community">
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://sraws.com">
-  <meta property="og:title" content="SRAWS - Post and Comment Platform">
+  <meta property="og:title" content="Sraws - Post and Comment Platform">
   <meta property="og:description" content="Post and comment platform for SRAW">
   <meta property="og:image" content="">
-  <meta property="og:image:alt" content="SRAWS Platform">
-  <meta property="og:site_name" content="SRAWS">
+  <meta property="og:image:alt" content="Sraws Platform">
+  <meta property="og:site_name" content="Sraws">
 
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image">
   <meta property="twitter:url" content="https://sraws.com">
-  <meta property="twitter:title" content="SRAWS - Post and Comment Platform">
-  <meta property="twitter:description" content="Post and comment platform for SRAW">
+  <meta property="twitter:title" content="Sraws - Post and Comment Platform">
+  <meta property="twitter:description" content="Post and comment platform for Sraws">
   <meta property="twitter:image" content="">
-  <meta property="twitter:image:alt" content="SRAWS Platform">
+  <meta property="twitter:image:alt" content="Sraws Platform">
 
   <!-- Manifest and Favicon -->
   <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
@@ -43,17 +43,32 @@
   <!-- Robots Meta Tag -->
   <meta name="robots" content="index, follow" />
 
+
+<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+<script>
+  window.OneSignalDeferred = window.OneSignalDeferred || [];
+  OneSignalDeferred.push(async function(OneSignal) {
+    await OneSignal.init({
+      appId: "a4ed4ae5-e74d-4c57-b4ca-c32c1cde4db3",
+      safari_web_id: "web.onesignal.auto.458f9dc8-6677-4788-b5a2-9d66a9d7a179",
+      notifyButton: {
+        enable: true,
+      },
+    });
+  });
+</script>
+
   <!-- Structured Data -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "SRAWS",
+    "name": "Sraws",
     "url": "https://sraws.com",
-    "description": "Post and comment platform for SRAW",
+    "description": "Post and comment platform for Sraws",
     "publisher": {
       "@type": "Organization",
-      "name": "SRAWS"
+      "name": "Sraws"
     }
   }
   </script>
@@ -83,7 +98,7 @@
   <meta name="msapplication-config" content="/browserconfig.xml">
 </head>
 <body>
-  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <noscript></noscript>
   <div id="root" role="main" aria-live="polite"></div>
 </body>
 </html>

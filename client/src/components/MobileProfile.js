@@ -23,6 +23,7 @@ import { isLoggedIn } from "../helpers/authHelper";
 import ContentUpdateEditor from "./ContentUpdateEditor";
 import UserAvatar from "./UserAvatar";
 import HorizontalStack from "./util/HorizontalStack";
+import { Helmet } from "react-helmet";
 
 const MobileProfile = (props) => {
   const [user, setUser] = useState(null);
@@ -43,7 +44,7 @@ const MobileProfile = (props) => {
 
   useEffect(() => {
     if (user) {
-      setShareUrl(`http://localhost:3000/users/${user.username}`);
+      setShareUrl(`https://sraws.com/users/${user.username}`);
     }
   }, [user]);
 
@@ -73,8 +74,20 @@ const MobileProfile = (props) => {
       .catch((error) => setCopySuccess("Failed to copy URL."));
   };
 
+
+
   return (
     <>
+
+      <Helmet>
+        <title>{`${user.username}'s Profile - Sraws`}</title>
+        <meta name="description" content={`${user.username}'s profile on Sraws. Check out their posts, likes, and more!`} />
+        <meta property="og:title" content={`${user.username}'s Profile`} />
+        <meta property="og:description" content={`Explore the profile of ${user.username} on Sraws. Engage with their content!`} />
+        <meta property="og:url" content={shareUrl} />
+        <meta property="og:image" content={`https://sraws.com/media/${user.username}/profile-image.jpg`} />
+      </Helmet>
+
       <Card sx={{ display: { sm: "block", md: "none" }, mb: 2, p: 2, borderRadius: 2 }}>
         <Stack spacing={2}>
           <HorizontalStack alignItems="center" spacing={2} justifyContent="space-between">

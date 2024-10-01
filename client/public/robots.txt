@@ -1,3 +1,6 @@
-User-agent: *
-Disallow: /admin  // Example, disallow admin pages
-Sitemap: https://yourwebsite.com/sitemap.xml
+User-agent: *                          # Applies to all user agents (crawlers)
+Disallow: /admin                       # Disallow access to the /admin directory
+Disallow: /private                     # Disallow access to any private sections
+Disallow: /user-data                   # Disallow access to user data directories
+Allow: /public                         # Allow access to the /public directory
+Sitemap: https://sraws.com/sitemap.xml # Link to your XML sitemap for better crawling

@@ -24,6 +24,7 @@ import ContentUpdateEditor from "./ContentUpdateEditor";
 import Loading from "./Loading";
 import UserAvatar from "./UserAvatar";
 import HorizontalStack from "./util/HorizontalStack";
+import { Helmet } from "react-helmet";
 
 const Profile = (props) => {
   const [user, setUser] = useState(null);
@@ -41,7 +42,7 @@ const Profile = (props) => {
   useEffect(() => {
     if (props.profile) {
       setUser(props.profile.user);
-      setShareUrl(`http://localhost:3000/users/${props.profile.user.username}`);
+      setShareUrl(`https://sraws.com/users/${props.profile.user.username}`);
     }
   }, [props.profile]);
 
@@ -68,6 +69,18 @@ const Profile = (props) => {
   };
 
   return (
+    <>
+
+      <Helmet>
+        <title>{user ? `${user.username}'s Profile` : 'Loading...'}</title>
+        <meta name="description" content={user ? `Profile of ${user.username}, Bio: ${user.biography || 'No bio yet'}` : 'Loading user profile...'} />
+        <meta property="og:title" content={`${user ? user.username : 'Loading...'}'s Profile`} />
+        <meta property="og:description" content={user ? `Explore the profile of ${user.username}. Bio: ${user.biography || 'No bio yet'}` : 'Loading user profile...'} />
+        <meta property="og:url" content={shareUrl} />
+        <meta property="og:type" content="profile" />
+        <meta property="og:image" content={`https://sraws.com/images/profiles/${user ? user.username : 'default'}.jpg`} /> {/* Change image path accordingly */}
+      </Helmet>
+    
     <Card sx={{ width: '100%', maxWidth: isMobile ? '100%' : 600 }}>
       {user ? (
         <Stack alignItems="center" spacing={2} sx={{ p: 2 }}>
@@ -269,7 +282,11 @@ const Profile = (props) => {
         <Loading />
       )}
     </Card>
+
+    </>
   );
 };
+
+
 
 export default Profile;

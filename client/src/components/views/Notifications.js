@@ -95,7 +95,7 @@ const styles = {
 };
 
 
-const SOCKET_SERVER_URL = 'wss://localhost:4000';
+const SOCKET_SERVER_URL = 'wss://api.sraws.com:4000';
 
 const Notifications = ({ userId }) => {
   const [notifications, setNotifications] = useState([]);
@@ -145,7 +145,7 @@ const Notifications = ({ userId }) => {
     }
 
     try {
-      const response = await axios.get(`/api/notifications/${userId}`);
+      const response = await axios.get(`https://api.sraws.com/api/notifications/${userId}`);
       const notificationsData = response.data;
       if (Array.isArray(notificationsData)) {
         setNotifications(notificationsData);
@@ -196,7 +196,7 @@ const Notifications = ({ userId }) => {
   const markAllAsRead = async () => {
     try {
       const userId = localStorage.getItem('userId');
-      await axios.put(`/api/notifications/mark-all-read/${userId}`);
+      await axios.put(`https://api.sraws.com/api/notifications/mark-all-read/${userId}`);
       setNotifications((prevNotifications) =>
         prevNotifications.map((notification) => ({ ...notification, read: true }))
       );
@@ -207,7 +207,7 @@ const Notifications = ({ userId }) => {
 
   const markAsRead = async (notificationId) => {
     try {
-      await axios.put(`/api/notifications/${notificationId}/read`);
+      await axios.put(`https://api.sraws.com/api/notifications/${notificationId}/read`);
       setNotifications((prev) =>
         prev.map((notification) =>
           notification._id === notificationId ? { ...notification, read: true } : notification
@@ -366,13 +366,13 @@ const Notifications = ({ userId }) => {
                 sx={styles.listItem}
                 onClick={() => {
                   if (notification.type === 'message') {
-                    window.location.href = 'http://localhost:3000/messenger';
+                    window.location.href = 'https://sraws.com/messenger';
                   } else if (notification.type === 'like' || notification.type === 'comment') {
                     const postId = notification.post ? notification.post._id : null;
                     const commentId = notification.comment ? notification.comment._id : null;
 
                     if (postId) {
-                      let url = `http://localhost:3000/posts/${postId}`;
+                      let url = `https://sraws.com/posts/${postId}`;
                       if (notification.type === 'comment' && commentId) {
                         url += `#comment-${commentId}`;
                       }

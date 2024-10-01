@@ -8,7 +8,7 @@ const Footer = () => {
         <Grid container spacing={2} justifyContent="center">
           <Grid item>
             <Typography variant="body2" color="textSecondary">
-              © {new Date().getFullYear()} SRAWS. All rights reserved.
+              © {new Date().getFullYear()} Sraws. All rights reserved.
             </Typography>
           </Grid>
           <Grid item>
@@ -35,7 +35,7 @@ const Footer = () => {
           <Grid item>
             <Link href="/ChatPage" sx={{ color: 'text.secondary', textDecoration: 'none', '&:hover': { color: 'primary.main', textDecoration: 'underline', cursor: 'pointer' } }}>
               <Typography variant="body2">
-                SRAWS Community
+              Sraws Community
               </Typography>
             </Link>
           </Grid>

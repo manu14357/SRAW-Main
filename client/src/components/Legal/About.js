@@ -58,12 +58,12 @@ const About = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', overflow: 'hidden', ...backgroundStyle }}>
       <Helmet>
-        <title>About SRAWS - Report Scams & Fraudulent Activities</title>
-        <meta name="description" content="Learn about SRAWS, a platform that empowers communities by reporting and alerting about scams and fraudulent activities." />
-        <meta name="keywords" content="SRAWS, scam reports, fraud prevention, scam alerts, community safety, report scams, avoid scams" />
-        <meta name="author" content="SRAWS Team" />
+        <title>About Sraws - Report Scams & Fraudulent Activities</title>
+        <meta name="description" content="Learn about Sraws, a platform that empowers communities by reporting and alerting about scams and fraudulent activities." />
+        <meta name="keywords" content="Sraws, scam reports, fraud prevention, scam alerts, community safety, report scams, avoid scams" />
+        <meta name="author" content="Sraws Team" />
         <link rel="canonical" href="https://sraws.com/About" />
-        <meta property="og:title" content="About SRAWS - Report Scams & Fraudulent Activities" />
+        <meta property="og:title" content="About Sraws - Report Scams & Fraudulent Activities" />
         <meta property="og:description" content="Empowering communities by reporting and alerting about scams and fraudulent activities." />
         <meta property="og:url" content="https://sraws.com/About" />
         <meta property="og:type" content="website" />
@@ -75,7 +75,7 @@ const About = () => {
           {/* Header Section */}
           <motion.div {...fadeInAnimation}>
             <Typography variant="h3" gutterBottom align="center" sx={{ mb: 3, color: 'primary.main', fontWeight: 'bold' }}>
-              About SRAWS
+              About Sraws
             </Typography>
             <Typography variant="h6" align="center" sx={{ mb: 4, color: '#555', fontStyle: 'italic' }}>
               Empowering communities by reporting and alerting about scams and fraudulent activities.

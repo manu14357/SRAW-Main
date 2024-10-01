@@ -58,7 +58,7 @@ const sendEmail = async (to, subject, htmlContent) => {
         }
 
         await transporter.sendMail({
-            from: `"SRAWS Notification Center" <${emailToUse}>`,
+            from: `"Sraws Notification Center" <${emailToUse}>`,
             to,
             subject,
             html: htmlContent

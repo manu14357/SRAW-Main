@@ -10,6 +10,7 @@ import SortBySelect from "./SortBySelect";
 import HorizontalStack from "./util/HorizontalStack";
 import AdContainer from "./views/AdContainer";
 import MediaAdContainer from "./views/MediaAdContainer";
+import { Helmet } from "react-helmet";
 
 const adsData = []; // Add ad data if available
 
@@ -26,8 +27,7 @@ const PostBrowser = (props) => {
   const [search] = useSearchParams();
   const [effect, setEffect] = useState(false);
 
-  const searchExists =
-    search && search.get("search") && search.get("search").length > 0;
+  const searchExists = search && search.get("search") && search.get("search").length > 0;
 
   const fetchPosts = async () => {
     setLoading(true);
@@ -86,7 +86,7 @@ const PostBrowser = (props) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (loading || end) return; // Don't trigger if already loading or end of posts
+      if (loading || end) return;
 
       const scrollTop = window.scrollY || window.pageYOffset;
       const windowHeight = window.innerHeight || document.documentElement.clientHeight;
@@ -147,6 +147,15 @@ const PostBrowser = (props) => {
 
   return (
     <>
+      <Helmet>
+        <title>{searchExists ? `Results for "${search.get("search")}"` : 'Post Browser'}</title>
+        <meta name="description" content="Browse through a collection of posts in Sraws. Filter by sort options and search for specific content." />
+        <meta property="og:title" content="Sraws Post Browser" />
+        <meta property="og:description" content="Browse through a collection of posts. Filter by sort options and search for specific content." />
+        <meta property="og:url" content={window.location.href} />
+        <meta property="og:type" content="website" />
+      </Helmet>
+
       <Stack spacing={1}>
         <Card>
           <HorizontalStack justifyContent="space-between">
@@ -169,7 +178,7 @@ const PostBrowser = (props) => {
         {posts.map((post, i) => (
           <React.Fragment key={post._id}>
             <PostCard preview="primary" post={post} removePost={removePost} />
-            {/* Display an ad every 15 posts */}
+            {/* Display an ad every 12 posts */}
             {i > 0 && i % 12 === 0 && <AdContainer ad={getRandomAd()} />}
             {i > 0 && i % 20 === 0 && <MediaAdContainer ad={getRandomAd()} />}
           </React.Fragment>

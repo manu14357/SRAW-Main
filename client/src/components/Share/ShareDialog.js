@@ -28,11 +28,16 @@ const ShareDialog = ({ open, onClose, link, postSummary }) => {
 
   const handleCopy = () => {
     setLoading(true);
-    navigator.clipboard.writeText(link).then(() => {
-      setLoading(false);
-      setCopySuccess(true);
-      setTimeout(() => setCopySuccess(false), 3000);
-    });
+    navigator.clipboard.writeText(link)
+      .then(() => {
+        setLoading(false);
+        setCopySuccess(true);
+        setTimeout(() => setCopySuccess(false), 3000);
+      })
+      .catch(() => {
+        setLoading(false);
+        // Optionally handle copy errors
+      });
   };
 
   return (
@@ -75,44 +80,56 @@ const ShareDialog = ({ open, onClose, link, postSummary }) => {
               </Typography>
             )}
             <Box display="flex" justifyContent="center" flexWrap="wrap" gap={2} mb={3}>
-              {[{
-                href: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(link)}`,
-                label: 'Facebook',
-                icon: <FaFacebook color="#ffffff" />,
-                bgColor: '#3b5998',
-                hoverColor: '#334d84'
-              }, {
-                href: `https://twitter.com/intent/tweet?url=${encodeURIComponent(link)}`,
-                label: 'Twitter',
-                icon: <FaTwitter color="#ffffff" />,
-                bgColor: '#1da1f2',
-                hoverColor: '#0d95e8'
-              }, {
-                href: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(link)}`,
-                label: 'LinkedIn',
-                icon: <FaLinkedin color="#ffffff" />,
-                bgColor: '#0077b5',
-                hoverColor: '#005c99'
-              }, {
-                href: `https://wa.me/?text=${encodeURIComponent(link)}`,
-                label: 'WhatsApp',
-                icon: <FaWhatsapp color="#ffffff" />,
-                bgColor: '#25D366',
-                hoverColor: '#1ebc6d'
-              }, {
-                href: `https://www.messenger.com/t/?link=${encodeURIComponent(link)}`,
-                label: 'Messenger',
-                icon: <FaFacebookMessenger color="#ffffff" />,
-                bgColor: '#0084ff',
-                hoverColor: '#0073e6'
-              }].map(({ href, label, icon, bgColor, hoverColor }, index) => (
+              {[
+                {
+                  href: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(link)}`,
+                  label: 'Facebook',
+                  icon: <FaFacebook />,
+                  bgColor: '#3b5998',
+                  hoverColor: '#334d84'
+                },
+                {
+                  href: `https://twitter.com/intent/tweet?url=${encodeURIComponent(link)}`,
+                  label: 'Twitter',
+                  icon: <FaTwitter />,
+                  bgColor: '#1da1f2',
+                  hoverColor: '#0d95e8'
+                },
+                {
+                  href: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(link)}`,
+                  label: 'LinkedIn',
+                  icon: <FaLinkedin />,
+                  bgColor: '#0077b5',
+                  hoverColor: '#005c99'
+                },
+                {
+                  href: `https://wa.me/?text=${encodeURIComponent(link)}`,
+                  label: 'WhatsApp',
+                  icon: <FaWhatsapp />,
+                  bgColor: '#25D366',
+                  hoverColor: '#1ebc6d'
+                },
+                {
+                  href: `https://www.messenger.com/t/?link=${encodeURIComponent(link)}`,
+                  label: 'Messenger',
+                  icon: <FaFacebookMessenger />,
+                  bgColor: '#0084ff',
+                  hoverColor: '#0073e6'
+                }
+              ].map(({ href, label, icon, bgColor, hoverColor }, index) => (
                 <Tooltip key={index} title={label} arrow>
                   <IconButton
                     component="a"
                     href={href}
                     target="_blank"
                     aria-label={label}
-                    sx={{ bgcolor: bgColor, '&:hover': { bgcolor: hoverColor }, transition: 'background-color 0.3s', p: 1.5 }}
+                    sx={{
+                      bgcolor: bgColor,
+                      '&:hover': { bgcolor: hoverColor },
+                      transition: 'background-color 0.3s',
+                      p: 1.5,
+                      color: '#fff'
+                    }}
                   >
                     {icon}
                   </IconButton>
@@ -130,7 +147,7 @@ const ShareDialog = ({ open, onClose, link, postSummary }) => {
               disabled={loading}
               sx={{ height: 48, fontWeight: 'bold', mb: 2, borderRadius: '8px' }}
             >
-              {loading ? <CircularProgress size={24} color="primary.main" /> : 'Copy Link'}
+              {loading ? <CircularProgress size={24} color="inherit" /> : 'Copy Link'}
             </Button>
           </Stack>
         </DialogContent>

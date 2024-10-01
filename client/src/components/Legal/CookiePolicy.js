@@ -11,11 +11,11 @@ const CookiePolicy = () => {
         <title>Cookie Policy - Sraws</title>
         <meta name="description" content="Learn about the types of cookies we use, how we use them, and how you can manage your cookie preferences." />
         <meta name="keywords" content="Cookie Policy, Cookies, Privacy, User Data, Website Policy" />
-        <meta name="author" content="SRAWS" />
+        <meta name="author" content="Sraws" />
         <link rel="canonical" href="https://www.sraws.com/cookie-policy" />
         
         {/* Open Graph Meta Tags */}
-        <meta property="og:title" content="Cookie Policy - SRAWS" />
+        <meta property="og:title" content="Cookie Policy - Sraws" />
         <meta property="og:description" content="Understand the types of cookies we use on our website and how they impact your experience." />
         <meta property="og:url" content="https://www.sraws.com/cookie-policy" />
         <meta property="og:type" content="website" />
@@ -23,7 +23,7 @@ const CookiePolicy = () => {
 
         {/* Twitter Card Meta Tags */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Cookie Policy - SRAWS" />
+        <meta name="twitter:title" content="Cookie Policy - Sraws" />
         <meta name="twitter:description" content="Learn about the cookies we use and how you can manage them." />
       </Helmet>
       <Navbar />

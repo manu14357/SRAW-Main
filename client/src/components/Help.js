@@ -176,13 +176,205 @@ const Help = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <Helmet>
-        <title>Help Center - SRAWS</title>
-        <meta name="description" content="Find answers to frequently asked questions about SRAWS, including how to report scams, search for users, and more." />
-        <meta property="og:title" content="Help Center - SRAWS" />
-        <meta property="og:description" content="Find answers to frequently asked questions about SRAWS, including how to report scams, search for users, and more." />
-        <meta property="og:url" content="https://sraws.mrcitsoft.com/help" />
+        <title>Help Center - Sraws</title>
+        <meta name="description" content="Find answers to frequently asked questions about Sraws, including how to report scams, search for users, and more." />
+        <meta property="og:title" content="Help Center - Sraws" />
+        <meta property="og:description" content="Find answers to frequently asked questions about Sraws, including how to report scams, search for users, and more." />
+        <meta property="og:url" content="https://sraws.com/help" />
         <meta property="og:image" content="URL_TO_IMAGE" />
-        <link rel="canonical" href="https://sraws.mrcitsoft.com/help" />
+        <link rel="canonical" href="https://sraws.com/help" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Does the Report page automatically fetch my location?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, the Report page automatically fetches your location. However, you can manually edit the location details if needed before submitting the report."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I search for other users on the platform?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, you can search for other users and connect with them through the message chat function on the platform."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How can I get more information about a reported post?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "If you need more information about a reported post, you can directly message the poster or leave a comment on their post."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How many media files can I upload with a post?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Users can upload up to 3 media files (images, videos, or audios) with a single post."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How will I receive notifications?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Notifications will be sent to the email address you used to sign up, and you can also check them on the Notifications page within the SRAWS platform."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I earn Social Points on the platform?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You can earn Social Points by engaging in various activities on the platform:\n<ul>\n<li>Post a new post: Earn 5 points for each post you create.</li>\n<li>Like a post: Earn 2 points for each like you give on any post.</li>\n<li>Comment on a post: Earn 3 points for each comment you make on a post.</li>\n</ul>"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I share posts or user profiles on other platforms?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, you can share posts or user profiles on other platforms, including social media, using a QR code or direct link."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I add or edit my bio on my profile?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, you can add or edit your bio in your profile settings at any time."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I remain anonymous when reporting a scam?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, you have the option to submit scam reports anonymously. However, if you choose to create an account, you can track your submissions and receive updates on your reports."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How does the alert system work?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The alert system notifies you when you enter areas with reported scams. These alerts are based on the location data from your device, ensuring you stay informed about potential risks nearby."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What type of scams can I report?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You can report any type of scam, including online fraud, phishing attempts, phone scams, in-person scams, and more. We encourage you to provide as much detail as possible to help others avoid falling victim to similar scams."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What should I do if I have doubts or questions?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "If you have any doubts or questions, you can message in the SRAWS Community Chat, either anonymously or with your name. The entire community will see your message, and anyone can reply to you through the chat page."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How can I provide feedback on the platform?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You can provide feedback by visiting the Help page and clicking on the 'Provide Feedback' button. Here, you can write and submit your feedback."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What are Top Posts on the Home page?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The Home page features Top Posts, which are highlighted based on their like count, allowing you to see the most popular content first."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How can I find scam reports in my area?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You can search for scam reports by location using the search bar on the homepage. You can also browse reports using filters such as date, type of scam, and location."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is the information on SRAWS verified?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "While SRAWS relies on user-generated content, we take steps to ensure the credibility of reports. However, we recommend that users exercise caution and conduct their own due diligence when assessing the information provided."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I interact with other users on the platform?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, you can comment on scam reports, Like on their helpfulness, and share them with others. If you have an account, you can also message other users to discuss reports in more detail."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What should I do if I receive a scam alert?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "If you receive a scam alert, it’s important to stay vigilant. Avoid engaging with potential scammers, do not share personal information, and report any suspicious activity to local authorities or on our platform."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How is my data used and stored?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Your data is stored securely on our servers and is used only to improve your experience on the platform. We do not share your personal information with third parties without your consent. For more details, please refer to our Privacy Policy."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I contact SRAWS if I have more questions or issues?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "If you have any further questions or encounter any issues, you can contact us through the 'Help' page, or send us an email at support@team.sraws.com. We're here to help!"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What should I do if I need to report an urgent scam or criminal activity?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "If you encounter an urgent scam or criminal activity, please contact your local law enforcement immediately. SRAWS is a platform for sharing information, but it is not a substitute for emergency services."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I remove or edit my scam report after submission?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, if you have an account, you can log in and edit or delete your scam reports."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are there any rules or guidelines for submitting a scam report?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, when submitting a scam report, ensure that your report is truthful, provide all necessary details, and avoid any inflammatory language or personal attacks."
+      }
+    }
+  ]
+          })}
+        </script>
       </Helmet>
     <Navbar />
     <Container maxWidth="md" sx={{ mt: 4, mb: 4 }}>
@@ -197,11 +389,11 @@ const Help = () => {
         </Typography>
 <Accordion expanded={expanded === 'panel1'} onChange={handleAccordionChange('panel1')}>
   <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-    <Typography variant="body1" sx={{ fontWeight: 'bold' }}>What is SRAWS?</Typography>
+    <Typography variant="body1" sx={{ fontWeight: 'bold' }}>What is Sraws?</Typography>
   </AccordionSummary>
   <AccordionDetails>
     <Typography>
-      SRAWS (Scam Reporting & Alert Website) is a platform that allows users to  share details about their experiences related to scams, frauds, and other negative incidents. The platform aims to raise awareness and help users stay informed about potential dangers in their areas.
+    Sraws (Scam Reporting & Alert Website) is a platform that allows users to  share details about their experiences related to scams, frauds, and other negative incidents. The platform aims to raise awareness and help users stay informed about potential dangers in their areas.
     </Typography>
   </AccordionDetails>
 </Accordion>

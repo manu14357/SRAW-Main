@@ -8,18 +8,18 @@ const CopyrightPolicy = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <Helmet>
-        <title>Copyright Policy - SRAWS</title>
+        <title>Copyright Policy - Sraws</title>
         <meta name="description" content="Read our copyright policy to understand how we handle intellectual property rights, reporting copyright infringements, and more." />
         <meta name="keywords" content="Copyright Policy, Intellectual Property, DMCA, Infringements, Legal" />
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href="https://www.sraws.com/copyright-policy" />
-        <meta property="og:title" content="Copyright Policy - SRAWS" />
+        <meta property="og:title" content="Copyright Policy - Sraws" />
         <meta property="og:description" content="Learn about our copyright policy, how to report infringements, and what actions we take to protect intellectual property rights." />
         <meta property="og:type" content="article" />
         <meta property="og:url" content="https://www.sraws.com/copyright-policy" />
         <meta property="og:image" content="" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Copyright Policy - SRAWS" />
+        <meta name="twitter:title" content="Copyright Policy - Sraws" />
         <meta name="twitter:description" content="Learn about our copyright policy, how to report infringements, and what actions we take to protect intellectual property rights." />
 
       </Helmet>
