@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const filter = require("../util/filter");
 const PostLike = require("./PostLike");
+const slugify = require("slugify"); // Ensure you have slugify installed
 
 const PostSchema = new mongoose.Schema(
   {
@@ -41,7 +42,7 @@ const PostSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-     metaTitle: {
+    metaTitle: {
       type: String,
       required: false,
     },
@@ -54,9 +55,14 @@ const PostSchema = new mongoose.Schema(
       required: false,
     },
     viewCount: {
-    type: Number,
-    default: 0,
-  },
+      type: Number,
+      default: 0,
+    },
+    slug: { // New slug field
+      type: String,
+      unique: true, // Ensure slugs are unique
+      required: true,
+    },
   },
   { timestamps: true }
 );
@@ -71,7 +77,7 @@ PostSchema.pre("save", function (next) {
   }
 
   if (!this.metaTitle) {
-    this.metaTitle = `${this.title} - Your Website Name`;
+    this.metaTitle = `${this.title}`;
   }
   if (!this.metaDescription) {
     this.metaDescription = `${this.content.substring(0, 160)}...`;
@@ -79,6 +85,13 @@ PostSchema.pre("save", function (next) {
   if (!this.metaKeywords) {
     this.metaKeywords = `${this.title}, ${this.address.city}, ${this.address.state}, ${this.address.country}`;
   }
+
+  // Create an SEO-friendly slug
+  const titleWithHyphens = this.metaTitle.trim().replace(/\s+/g, '-'); // Replace spaces with hyphens
+  this.slug = slugify(`${titleWithHyphens} ${this.address.country}`, {
+    lower: true, // Convert to lowercase
+    strict: true, // Remove special characters
+  });
 
   next();
 });
@@ -90,4 +103,4 @@ PostSchema.pre("remove", async function (next) {
 
 const Post = mongoose.model('Post', PostSchema);
 
-module.exports = mongoose.model("post", PostSchema);
+module.exports = Post; // Update to export Post model

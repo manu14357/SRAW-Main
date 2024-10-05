@@ -37,58 +37,62 @@ const PostView = () => {
     fetchPost();
   }, [params.id]);
 
+
+  
+
   return (
     <Container maxWidth="xl">
       <Helmet>
-        {/* Dynamic Meta Tags for SEO */}
-        <title>{post ? post.title : "Loading Post..."} | Sraws</title>
-        <meta
-          name="description"
-          content={post ? post.metaDescription || post.content.slice(0, 160) : "View detailed scam reports and user comments."}
-        />
-        <meta
-          name="keywords"
-          content={post ? post.metaKeywords || "scam reports, user comments, fraud, alert platform" : "scam, fraud, reporting"}
-        />
-        <meta property="og:title" content={post ? post.title : "Post | Sraws"} />
-        <meta property="og:description" content={post ? post.metaDescription || post.content.slice(0, 160) : "View scam reports"} />
-        <meta property="og:image" content={post && post.metaImage ? post.metaImage : "/default-image.jpg"} />
-        <meta property="og:url" content={`https://www.sraws.com/posts/${params.id}`} />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={post ? post.title : "Post | Sraws"} />
-        <meta name="twitter:description" content={post ? post.metaDescription || post.content.slice(0, 160) : "View scam reports"} />
-        <meta name="twitter:image" content={post && post.metaImage ? post.metaImage : "/default-image.jpg"} />
-        <meta name="robots" content="index, follow" />
-        <link rel="canonical" href={`https://www.sraws.com/posts/${params.id}`} />
+  {/* Dynamic Meta Tags for SEO */}
+  <title>{post ? post.title : "Loading Post..."} | Sraws</title>
+  <meta
+    name="description"
+    content={post ? post.metaDescription || post.content.slice(0, 160) : "View detailed scam reports and user comments."}
+  />
+  <meta
+    name="keywords"
+    content={post ? post.metaKeywords || "scam reports, user comments, fraud, alert platform" : "scam, fraud, reporting"}
+  />
+  <meta property="og:title" content={post ? post.title : "Post | Sraws"} />
+  <meta property="og:description" content={post ? post.metaDescription || post.content.slice(0, 160) : "View scam reports"} />
+  <meta property="og:image" content={post && post.metaImage ? post.metaImage : "/default-image.jpg"} />
+  <meta property="og:url" content={`https://www.sraws.com/posts/${post ? post.slug : ''}/${params.id}`} />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={post ? post.title : "Post | Sraws"} />
+  <meta name="twitter:description" content={post ? post.metaDescription || post.content.slice(0, 160) : "View scam reports"} />
+  <meta name="twitter:image" content={post && post.metaImage ? post.metaImage : "/default-image.jpg"} />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href={`https://www.sraws.com/posts/${post ? post.slug : ''}/${params.id}`} />
 
-        {/* Structured Data (JSON-LD) for better SEO */}
-        {post && (
-          <script type="application/ld+json">
-            {`
-              {
-                "@context": "https://schema.org",
-                "@type": "Article",
-                "headline": "${post.title}",
-                "description": "${post.metaDescription || post.content.slice(0, 160)}",
-                "author": {
-                  "@type": "Person",
-                  "name": "${post.poster.username}"
-                },
-                "datePublished": "${post.createdAt}",
-                "publisher": {
-                  "@type": "Organization",
-                  "name": "Sraws"
-                },
-                "image": "${post.metaImage || '/default-image.jpg'}",
-                "mainEntityOfPage": {
-                  "@type": "WebPage",
-                  "@id": "https://www.sraws.com/posts/${params.id}"
-                }
-              }
-            `}
-          </script>
-        )}
-      </Helmet>
+  {/* Structured Data (JSON-LD) for better SEO */}
+  {post && (
+    <script type="application/ld+json">
+      {`
+        {
+          "@context": "https://schema.org",
+          "@type": "Article",
+          "headline": "${post.title}",
+          "description": "${post.metaDescription || post.content.slice(0, 160)}",
+          "author": {
+            "@type": "Person",
+            "name": "${post.poster.username}"
+          },
+          "datePublished": "${post.createdAt}",
+          "publisher": {
+            "@type": "Organization",
+            "name": "Sraws"
+          },
+          "image": "${post.metaImage || '/default-image.jpg'}",
+          "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://www.sraws.com/posts/${post ? post.slug : ''}/${params.id}"
+          }
+        }
+      `}
+    </script>
+  )}
+</Helmet>
+
 
       <Navbar />
       <GoBack />

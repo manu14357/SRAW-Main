@@ -36,6 +36,8 @@ const UserSchema = new mongoose.Schema(
       default: false,
     },
     socialPoints: { type: Number, default: 0 }, // Add socialPoints field
+    resetToken: { type: String }, // Token for password reset
+    resetTokenExpiration: { type: Date }, // Expiration for the reset token
   },
   { timestamps: true }
 );

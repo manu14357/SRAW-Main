@@ -59,6 +59,7 @@ const About = () => {
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', overflow: 'hidden', ...backgroundStyle }}>
       <Helmet>
         <title>About Sraws - Report Scams & Fraudulent Activities</title>
+        <meta name="title" content="About Sraws - Report Scams & Fraudulent Activities"/>
         <meta name="description" content="Learn about Sraws, a platform that empowers communities by reporting and alerting about scams and fraudulent activities." />
         <meta name="keywords" content="Sraws, scam reports, fraud prevention, scam alerts, community safety, report scams, avoid scams" />
         <meta name="author" content="Sraws Team" />

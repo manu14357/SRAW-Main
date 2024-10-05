@@ -7,6 +7,8 @@ const Follow = require("../models/Follow");
 const { default: mongoose } = require("mongoose");
 const Message = require("../models/Message");
 const Notification = require("../models/Notification");
+const crypto = require('crypto');
+
 
 const getUserDict = (token, user) => {
   return {
@@ -33,20 +35,20 @@ const { generateWelcomeEmail } = require('../WELCOM/emailTemplates');
 const sendWelcomeEmail = async (email, username) => {
   try {
     let transporter = nodemailer.createTransport({
-      // Your email SMTP configuration (e.g., Gmail, SMTP server, etc.)
-      // Example:
-      service: 'gmail',
+      host: 'smtp.hostinger.com',
+      port: 465,
+      secure: true, // use TLS
       auth: {
-        user: 'manoharchoppa6@gmail.com',
-        pass: 'nbqfgcmxggfkuzri'
+        user: process.env.info_team,
+        pass: process.env.info_password
       }
     });
 
     // Send mail with defined transport object
     let info = await transporter.sendMail({
-      from: '"SRAW Team" <manoharchoppa6@gmail.com>',
+      from: '"Sraws Team" <info@team.sraws.com>',
       to: email,
-      subject: 'Welcome to SRAW!',
+      subject: 'Welcome to Sraws!',
       html: generateWelcomeEmail(username)
     });
 
@@ -95,24 +97,34 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { usernameOrEmail, password } = req.body; // Updated field name
 
-    if (!(email && password)) {
+    if (!(usernameOrEmail && password)) {
       throw new Error("All input required");
     }
 
-    const normalizedEmail = email.toLowerCase();
+    // Normalize email if input appears to be an email address
+    const normalizedEmail = usernameOrEmail.toLowerCase();
+    const isEmailInput = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(usernameOrEmail);
 
-    const user = await User.findOne({ email: normalizedEmail });
+    let user;
+
+    if (isEmailInput) {
+      // Authenticate using email
+      user = await User.findOne({ email: normalizedEmail });
+    } else {
+      // Authenticate using username
+      user = await User.findOne({ username: usernameOrEmail });
+    }
 
     if (!user) {
-      throw new Error("Email or password incorrect");
+      throw new Error("Username/Email or password incorrect");
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid) {
-      throw new Error("Email or password incorrect");
+      throw new Error("Username/Email or password incorrect");
     }
 
     const token = jwt.sign(buildToken(user), process.env.TOKEN_KEY);
@@ -123,6 +135,7 @@ const login = async (req, res) => {
     return res.status(400).json({ error: err.message });
   }
 };
+
 
 const follow = async (req, res) => {
   try {
@@ -368,6 +381,154 @@ const createNotification = async (type, postId, senderId, recipientId, commentId
   }
 };
 
+const sendPasswordResetEmail = async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    // Check if the user exists
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ error: 'User not found.' });
+    }
+
+    // Generate a reset token
+    const resetToken = crypto.randomBytes(32).toString('hex');
+    const resetTokenExpiration = Date.now() + 3600000; // Token valid for 1 hour
+
+    // Save the reset token and its expiration to the user record
+    user.resetToken = resetToken;
+    user.resetTokenExpiration = resetTokenExpiration;
+    await user.save();
+
+    // Set up your email transporter with Hostinger's SMTP
+    const transporter = nodemailer.createTransport({
+      host: 'smtp.hostinger.com',
+      port: 465,
+      secure: true, // Use SSL
+      auth: {
+        user: process.env.info_team,
+        pass: process.env.info_password
+      }
+    });
+
+    // Create the email content
+    const mailOptions = {
+      from: 'info@team.sraws.com',
+      to: email,
+      subject: 'Password Reset Request',
+      html: `
+        <html>
+          <head>
+            <style>
+              body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f4;
+                margin: 0;
+                padding: 20px;
+              }
+              .container {
+                max-width: 600px;
+                margin: 0 auto;
+                background-color: #ffffff;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+              }
+              .header {
+                background-color: #007bff; /* Change this to your brand color */
+                color: #ffffff;
+                padding: 10px;
+                text-align: center;
+                border-radius: 8px 8px 0 0;
+              }
+              .content {
+                margin: 20px 0;
+                color: #333333; /* Text color for better readability */
+              }
+              .footer {
+                text-align: center;
+                font-size: 12px;
+                color: #888888;
+                margin-top: 20px;
+              }
+              a {
+                background-color: #007bff; /* Button background color */
+                color: white; /* Button text color */
+                padding: 10px 15px;
+                text-decoration: none;
+                border-radius: 5px;
+                display: inline-block;
+                margin-top: 10px;
+                font-weight: bold; /* Bold text for button */
+              }
+              a:hover {
+                background-color: #0056b3; /* Darker shade on hover */
+              }
+            </style>
+          </head>
+          <body>
+            <div class="container">
+              <div class="header">
+                <h1>Password Reset Request</h1>
+              </div>
+              <div class="content">
+                <p>Hi,</p>
+                <p>You requested a password reset for your account associated with the email address <strong>${email}</strong>.</p>
+                <p>Please click the button below to reset your password:</p>
+                <a href="http://localhost:3000/reset-password?token=${resetToken}&email=${email}">
+                  Reset Password
+                </a>
+                <p>If you did not request a password reset, please ignore this email. Your password will remain unchanged.</p>
+                <p>For any issues or questions, feel free to contact our support team.</p>
+                <p>Thank you for being a valued member of our community!</p>
+              </div>
+              <div class="footer">
+                <p>© ${new Date().getFullYear()} Sraws. All rights reserved.</p>
+              </div>
+            </div>
+          </body>
+        </html>
+      `,
+    };
+    
+    
+
+    // Send the email
+    await transporter.sendMail(mailOptions);
+    return res.status(200).json({ message: 'Password reset email sent!' });
+  } catch (error) {
+    console.error(error); // Log error for debugging
+    return res.status(500).json({ error: 'Error sending email.' });
+  }
+};
+
+
+
+
+const resetPassword = async (req, res) => {
+  const { token, email, newPassword } = req.body;
+
+  try {
+    // Verify the token and find the user by email
+    const user = await User.findOne({ email });
+    if (!user || user.resetToken !== token || user.resetTokenExpiration < Date.now()) {
+      return res.status(400).json({ error: 'Invalid token or email.' });
+    }
+
+    // Hash the new password
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    user.password = hashedPassword; // Update the password
+    user.resetToken = undefined; // Clear the reset token after use
+    user.resetTokenExpiration = undefined; // Clear the expiration
+    await user.save();
+
+    res.status(200).json({ message: 'Password has been reset successfully!' });
+  } catch (error) {
+    console.error(error); // Log error for debugging
+    res.status(500).json({ error: 'Error resetting password.' });
+  }
+};
+
 
 module.exports = {
   register,
@@ -382,4 +543,6 @@ module.exports = {
   sendMessage,
   getNotifications,
   markNotificationAsRead,
+  sendPasswordResetEmail,
+  resetPassword,
 };

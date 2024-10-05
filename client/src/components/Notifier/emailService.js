@@ -3,15 +3,15 @@ const moment = require('moment'); // For handling dates
 
 // Email addresses
 const emailAddresses = [
-    'notifications_r261201@no-reply.sraws.com',
-    'notifications_r261202@no-reply.sraws.com',
-    'notifications_r261203@no-reply.sraws.com',
-    'notifications_r261204@no-reply.sraws.com',
-    'notifications_r261205@no-reply.sraws.com'
+    process.env.notifications_r261201,
+    process.env.notifications_r261202,
+    process.env.notifications_r261203,
+    process.env.notifications_r261204,
+    process.env.notifications_r261205
 ];
 
 // Password for all emails
-const emailPassword = '@Ramu2612manu';
+const emailPassword = process.env.notifications_Password;
 
 // Create a transporter object using Hostinger's SMTP transport
 const transporter = nodemailer.createTransport({

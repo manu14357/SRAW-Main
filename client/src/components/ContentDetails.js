@@ -13,14 +13,7 @@ const ContentDetails = ({ username, createdAt, edited, preview, isAdmin }) => {
   return (
     <HorizontalStack sx={{ alignItems: 'center' }}>
       {/* Add SEO meta tags for better visibility */}
-      <Helmet>
-        <title>{username}'s post - Sraws</title>
-        <meta name="description" content={`${username}'s post, posted ${edited ? "and edited " : ""}on ${new Date(createdAt).toLocaleDateString()}`} />
-        <meta property="og:title" content={`${username}'s post`} />
-        <meta property="og:type" content="article" />
-        <meta property="og:description" content={`${username}'s post created ${new Date(createdAt).toLocaleString()}`} />
-      </Helmet>
-
+      
       {/* Schema.org structured data for better SEO */}
       <script type="application/ld+json">
         {`

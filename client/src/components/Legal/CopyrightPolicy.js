@@ -9,6 +9,7 @@ const CopyrightPolicy = () => {
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <Helmet>
         <title>Copyright Policy - Sraws</title>
+        <meta name="title" content="Copyright Policy - Sraws"/>
         <meta name="description" content="Read our copyright policy to understand how we handle intellectual property rights, reporting copyright infringements, and more." />
         <meta name="keywords" content="Copyright Policy, Intellectual Property, DMCA, Infringements, Legal" />
         <meta name="robots" content="index, follow" />
@@ -98,7 +99,7 @@ const CopyrightPolicy = () => {
             </Typography>
             <Typography variant="body1" paragraph>
                 Email: support@team.sraws.com<br />
-                Community Forum: <a href="https://sraws.com/ChatPage" target="_blank" rel="noopener noreferrer">SRAWS Community</a>
+                Community Forum: <a href="https://sraws.com/Community-Corner" target="_blank" rel="noopener noreferrer">SRAWS Community</a>
             </Typography>
           </Box>
 

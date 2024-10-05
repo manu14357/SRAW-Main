@@ -38,10 +38,10 @@ const Footer = () => {
           <Link href="/Help" sx={{ mx: 1, textDecoration: 'none', color: 'text.primary', cursor: 'pointer', '&:hover': { textDecoration: 'underline', color: 'primary.main' } }}>
             Help
           </Link>
-          <Link href="/about" sx={{ mx: 1, textDecoration: 'none', color: 'text.primary', cursor: 'pointer', '&:hover': { textDecoration: 'underline', color: 'primary.main' } }}>
+          <Link href="/About" sx={{ mx: 1, textDecoration: 'none', color: 'text.primary', cursor: 'pointer', '&:hover': { textDecoration: 'underline', color: 'primary.main' } }}>
             About
           </Link>
-          <Link href="/ChatPage" sx={{ mx: 1, textDecoration: 'none', color: 'text.primary', cursor: 'pointer', '&:hover': { textDecoration: 'underline', color: 'primary.main' } }}>
+          <Link href="/Community-Corner" sx={{ mx: 1, textDecoration: 'none', color: 'text.primary', cursor: 'pointer', '&:hover': { textDecoration: 'underline', color: 'primary.main' } }}>
             Sraws Community
           </Link>
           <Link href="/privacy-policy" sx={{ mx: 1, textDecoration: 'none', color: 'text.primary', cursor: 'pointer', '&:hover': { textDecoration: 'underline', color: 'primary.main' } }}>

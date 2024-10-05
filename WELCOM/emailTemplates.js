@@ -7,7 +7,7 @@ const generateWelcomeEmail = (username) => {
       <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Welcome to SRAW!</title>
+        <title>Welcome to Sraws!</title>
         <style>
           /* Global Reset */
           body, html {
@@ -120,18 +120,18 @@ const generateWelcomeEmail = (username) => {
           <tr>
             <td>
               <div class="header">
-                Welcome to SRAWS, ${username}!
+                Welcome to Sraws, ${username}!
               </div>
             </td>
           </tr>
           <tr>
             <td class="content">
               <h1>Hello ${username},</h1>
-              <p>Welcome to SRAWS! We’re delighted to have you join our platform, where we focus on creating a safe and supportive community.</p>
-              <p>SRAWS is dedicated to helping people by sharing and learning from experiences related to scams, frauds, and other negative incidents. By participating, you can contribute valuable insights and help prevent others from facing similar challenges.</p>
+              <p>Welcome to Sraws! We’re delighted to have you join our platform, where we focus on creating a safe and supportive community.</p>
+              <p>Sraws is dedicated to helping people by sharing and learning from experiences related to scams, frauds, and other negative incidents. By participating, you can contribute valuable insights and help prevent others from facing similar challenges.</p>
               <div class="featured-content">
-                <h2>About SRAWS</h2>
-                <p>At SRAWS, we provide a space where users can post about scams, frauds, and other troubling incidents they've encountered. Our platform empowers individuals to share their stories and warnings, which helps to protect others and build a stronger community.</p>
+                <h2>About Sraws</h2>
+                <p>At Sraws, we provide a space where users can post about scams, frauds, and other troubling incidents they've encountered. Our platform empowers individuals to share their stories and warnings, which helps to protect others and build a stronger community.</p>
                 <p>Your contributions not only aid in spreading awareness but also earn you social points. These points recognize your efforts and can be shared with your community to foster support and solidarity.</p>
               </div>
               <p>We encourage you to explore the platform, share your experiences, and connect with others. Every post and interaction helps to build a safer and more informed community. Together, we can make a difference!</p>
@@ -149,8 +149,8 @@ const generateWelcomeEmail = (username) => {
           </tr>
           <tr>
             <td class="footer">
-              <p>Best regards,<br>The SRAWS Team</p>
-              <p>&copy; 2024 SRAWS. All rights reserved. <br> <a href="#">Unsubscribe</a></p>
+              <p>Best regards,<br>The Sraws Team</p>
+              <p>&copy; 2024 Sraws. All rights reserved. <br> <a href="#">Unsubscribe</a></p>
             </td>
           </tr>
         </table>

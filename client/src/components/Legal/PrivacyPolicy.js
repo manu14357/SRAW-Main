@@ -9,6 +9,7 @@ const PrivacyPolicy = () => {
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
     <Helmet>
         <title>Privacy Policy - Sraws</title>
+        <meta name="title" content="Privacy Policy - Sraws"/>
         <meta name="description" content="Read the privacy policy for Sraws, detailing how we collect, use, and store your data." />
         <meta name="keywords" content="Privacy Policy, Data Protection, User Information, Sraws" />
         <meta name="robots" content="index,follow" />

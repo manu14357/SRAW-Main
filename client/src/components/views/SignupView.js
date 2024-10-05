@@ -16,15 +16,16 @@ import {
   FormHelperText,
   Grid,
   Divider,
+  Box,
 } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
-import { Box } from "@mui/system";
 import PasswordStrengthMeter from "../PasswordStrengthMeter"; // Assuming PasswordStrengthMeter is in the same directory
 import { signup } from "../../api/users";
 import { loginUser } from "../../helpers/authHelper";
 import { useNavigate } from "react-router-dom";
 import { isLength, isEmail, contains } from "validator";
 import srawsmainlogo from "../Assets/srawsmainlogo.png";
+
 const SignupView = () => {
   const navigate = useNavigate();
   const [serverError, setServerError] = useState("");
@@ -101,11 +102,11 @@ const SignupView = () => {
       <Stack spacing={3} alignItems="center">
         <Typography variant="h2" color="text.secondary">
           <Link to="/" href="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-             <img src={srawsmainlogo} alt="Logo" style={{ height: 60 }} />
+            <img src={srawsmainlogo} alt="Logo" style={{ height: 60 }} />
           </Link>
         </Typography>
-        <Typography variant="h5" gutterBottom color="primary" align="center">
-          Sign Up
+        <Typography variant="h4" color="primary" align="center">
+          Create a Account
         </Typography>
         <Box component="form" onSubmit={handleSubmit} sx={{ width: "100%" }}>
           <Grid container spacing={2}>
@@ -225,12 +226,45 @@ const SignupView = () => {
         <Box sx={{ mt: 2 }}>
           <Divider />
         </Box>
-        <Typography color="text.secondary" sx={{ mt: 2 }}>
-            Already have an account?{" "}
-            <RouterLink to="/login" color="inherit">
-              Login
-            </RouterLink>
-          </Typography>
+        {/* Footer Links */}
+      <Box sx={{ mt: 4, textAlign: "center" }}>
+        <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+          Need help signing in? Check our other options below:
+        </Typography>
+
+        <Stack direction="row" justifyContent="center" spacing={2}>
+          <Link
+            component={RouterLink}
+            to="/login"
+            sx={{ textDecoration: "none", color: "#1976d2", fontWeight: "bold", transition: "color 0.3s ease" }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = "#125ea1")}
+            onMouseLeave={(e) => (e.currentTarget.style.color = "#1976d2")}
+          >
+            Sign In
+          </Link>
+          <Link
+            component={RouterLink}
+            to="/help"
+            sx={{ textDecoration: "none", color: "#1976d2", fontWeight: "bold", transition: "color 0.3s ease" }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = "#125ea1")}
+            onMouseLeave={(e) => (e.currentTarget.style.color = "#1976d2")}
+          >
+            Help
+          </Link>
+          <Link
+            component={RouterLink}
+            to="/"
+            sx={{ textDecoration: "none", color: "#1976d2", fontWeight: "bold", transition: "color 0.3s ease" }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = "#125ea1")}
+            onMouseLeave={(e) => (e.currentTarget.style.color = "#1976d2")}
+          >
+            Home
+          </Link>
+        </Stack>
+      </Box>
+      <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
+            © {new Date().getFullYear()} Sraws. All rights reserved.
+      </Typography>
       </Stack>
     </Container>
   );

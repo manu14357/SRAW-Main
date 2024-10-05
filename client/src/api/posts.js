@@ -2,16 +2,22 @@ import axios from 'axios';
 import { BASE_URL } from "../config";
 
 // Function to fetch a post by its ID
-const getPost = async (postId, token) => {
+const getPost = async (postId, token , slug) => {
   try {
     const res = await axios.get(`${BASE_URL}api/posts/${postId}`, {
       headers: {
         "x-access-token": token,
       },
     });
+
+    // Return the post data if the request is successful
     return res.data;
   } catch (err) {
-    console.log(err);
+    // Log the error for debugging
+    console.error("Error fetching post:", err);
+
+    // Return a fallback object with an error property
+    return { error: err.response?.data?.message || "Failed to fetch post" };
   }
 };
 

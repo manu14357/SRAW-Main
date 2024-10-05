@@ -33,7 +33,7 @@ const Footer = () => {
             </Link>
           </Grid>
           <Grid item>
-            <Link href="/ChatPage" sx={{ color: 'text.secondary', textDecoration: 'none', '&:hover': { color: 'primary.main', textDecoration: 'underline', cursor: 'pointer' } }}>
+            <Link href="/Community-Corner" sx={{ color: 'text.secondary', textDecoration: 'none', '&:hover': { color: 'primary.main', textDecoration: 'underline', cursor: 'pointer' } }}>
               <Typography variant="body2">
               Sraws Community
               </Typography>

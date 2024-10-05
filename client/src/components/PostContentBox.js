@@ -18,7 +18,7 @@ const PostContentBox = (props) => {
             width: "92%",
             "&:hover": { backgroundColor: "grey.50", cursor: "pointer" },
           }}
-          onClick={() => navigate("/posts/" + post._id)}
+          onClick={() => navigate(`/posts/${post.slug}/${post._id}?edited=${post.edited ? "true" : "false"}`)}
         >
           {props.children}
         </Box>

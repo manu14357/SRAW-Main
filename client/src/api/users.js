@@ -71,7 +71,7 @@ const updateUser = async (user, data) => {
 };
 
 // api/notifications.js
-export const getNotifications = async (userId) => {
+const getNotifications = async (userId) => {
   if (!userId) {
     throw new Error("User ID is required");
   }
@@ -85,6 +85,52 @@ export const getNotifications = async (userId) => {
   return data;
 };
 
+const sendPasswordResetEmail = async (email) => {
+  try {
+    const response = await fetch("/api/users/forgot-password", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || "Error sending password reset email.");
+    }
+
+    return data;
+  } catch (error) {
+    return { error: error.message };
+  }
+};
+
+const resetPassword = async (token, newPassword) => {
+  try {
+    const response = await fetch(`/api/users/reset-password/${token}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ newPassword }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || "Error resetting password.");
+    }
+
+    return data;
+  } catch (error) {
+    return { error: error.message };
+  }
+};
 
 
-export { signup, login, getUser, getRandomUsers, updateUser };
+
+
+
+export { signup, login, getUser, getRandomUsers, updateUser, getNotifications, sendPasswordResetEmail, resetPassword };

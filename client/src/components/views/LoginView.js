@@ -11,17 +11,18 @@ import {
   CircularProgress,
   Box,
   Link,
+  Alert, // Import Alert for better error display
 } from "@mui/material";
 import { login } from "../../api/users";
 import { loginUser } from "../../helpers/authHelper";
-import ErrorAlert from "../ErrorAlert";
 import Copyright from "../Copyright";
 import srawsmainlogo from "../Assets/srawsmainlogo.png";
+
 const LoginView = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    email: "",
+    usernameOrEmail: "",
     password: "",
     rememberMe: false,
   });
@@ -31,6 +32,7 @@ const LoginView = () => {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    if (serverError) setServerError(""); // Clear error on input change
   };
 
   const handleCheckboxChange = (e) => {
@@ -41,17 +43,17 @@ const LoginView = () => {
     e.preventDefault();
     setLoading(true);
 
-    // Check if email or password is empty
-    if (!formData.email || !formData.password) {
+    // Basic validation for empty fields
+    if (!formData.usernameOrEmail || !formData.password) {
       setLoading(false);
-      setServerError("Please enter both email and password.");
+      setServerError("Please enter both username/email and password.");
       return;
     }
 
-    // Check if email and password are the same
-    if (formData.email === formData.password) {
+    // Check if username/email and password are the same
+    if (formData.usernameOrEmail === formData.password) {
       setLoading(false);
-      setServerError("Email and password cannot be the same.");
+      setServerError("Username/Email and password cannot be the same.");
       return;
     }
 
@@ -66,22 +68,26 @@ const LoginView = () => {
     }
   };
 
-
-
-
-  
   return (
     <Container maxWidth="xs" sx={{ mt: 8 }}>
       <Stack spacing={3} alignItems="center">
         <Typography variant="h2" color="text.secondary">
           <Link to="/" href="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-             <img src={srawsmainlogo} alt="Logo" style={{ height: 60 }} />
+            <img src={srawsmainlogo} alt="Logo" style={{ height: 60 }} />
           </Link>
         </Typography>
 
         <Typography variant="h4" color="primary" align="center">
           Login
         </Typography>
+        
+        {/* Error Alert */}
+        {serverError && (
+          <Alert severity="error" sx={{ width: '100%', mb: 2 }}>
+            {serverError}
+          </Alert>
+        )}
+
         <Box
           component="form"
           onSubmit={handleSubmit}
@@ -93,15 +99,15 @@ const LoginView = () => {
           }}
         >
           <TextField
-            label="Email Address"
+            label="Username or Email Address"
             fullWidth
             margin="normal"
-            autoComplete="email"
+            autoComplete="username"
             autoFocus
             required
-            id="email"
-            name="email"
-            value={formData.email}
+            id="usernameOrEmail"
+            name="usernameOrEmail"
+            value={formData.usernameOrEmail}
             onChange={handleChange}
           />
           <TextField
@@ -115,6 +121,26 @@ const LoginView = () => {
             onChange={handleChange}
             type="password"
           />
+          {/* Forgot Password Link */}
+          <Typography 
+            variant="body2" 
+            color="text.secondary" 
+            sx={{ alignSelf: "flex-end", marginTop: 1 }}
+          >
+            <RouterLink
+              to="/forgot-password"
+              style={{
+                textDecoration: "none",
+                color: "#1976d2",
+                fontWeight: "bold",
+                transition: "color 0.3s ease",
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = "#125ea1")} // Darker shade on hover
+              onMouseLeave={(e) => (e.currentTarget.style.color = "#1976d2")} // Original color
+            >
+              Forgot your password?
+            </RouterLink>
+          </Typography>
           <FormControlLabel
             control={
               <Checkbox
@@ -127,7 +153,6 @@ const LoginView = () => {
             label="Remember Me"
             sx={{ alignSelf: "flex-start" }}
           />
-          <ErrorAlert error={serverError} />
           <Button
             type="submit"
             fullWidth
@@ -176,7 +201,7 @@ const LoginView = () => {
           <Typography variant="body2" color="text.secondary">
             Need help? Contact support at{" "}
             <a
-              href="mailto:support@team.sraws.com"
+              href="mailto:support@sraw.com"
               style={{
                 textDecoration: "none",
                 color: "#1976d2",
@@ -185,14 +210,44 @@ const LoginView = () => {
                 marginTop: "8px",
               }}
             >
-              support@team.sraws.com
+              support@sraw.com
             </a>
           </Typography>
         </Box>
-        <Box mt={1}>
-          <Copyright />
-        </Box>
+        <Stack direction="row" justifyContent="center" spacing={2}>
+          <Link
+            component={RouterLink}
+            to="/help"
+            sx={{ textDecoration: "none", color: "#1976d2", fontWeight: "bold", transition: "color 0.3s ease" }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = "#125ea1")}
+            onMouseLeave={(e) => (e.currentTarget.style.color = "#1976d2")}
+          >
+            Help
+          </Link>
+          <Link
+            component={RouterLink}
+            to="/signup"
+            sx={{ textDecoration: "none", color: "#1976d2", fontWeight: "bold", transition: "color 0.3s ease" }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = "#125ea1")}
+            onMouseLeave={(e) => (e.currentTarget.style.color = "#1976d2")}
+          >
+            Sign Up
+          </Link>
+          <Link
+            component={RouterLink}
+            to="/"
+            sx={{ textDecoration: "none", color: "#1976d2", fontWeight: "bold", transition: "color 0.3s ease" }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = "#125ea1")}
+            onMouseLeave={(e) => (e.currentTarget.style.color = "#1976d2")}
+          >
+            Home
+          </Link>
+        </Stack>
+      <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
+            © {new Date().getFullYear()} Sraws. All rights reserved.
+      </Typography>
       </Stack>
+      
     </Container>
   );
 };

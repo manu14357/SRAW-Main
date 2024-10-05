@@ -151,7 +151,7 @@ const PostCard = ({ post: initialPost, preview, removePost }) => {
 
   const generateShareLink = () => {
     const baseUrl = "https://sraws.com";
-    return `${baseUrl}/posts/${post._id}`;
+    return `${baseUrl}/posts/${post.slug}/${post._id}`;
   };
 
   const handleShare = () => {
@@ -199,7 +199,7 @@ const PostCard = ({ post: initialPost, preview, removePost }) => {
 
   const generateEmbedCode = () => {
     const baseUrl = "https://sraws.com";
-    const embedUrl = `${baseUrl}/posts/${post._id}`;
+    const embedUrl = `${baseUrl}/posts/${post.slug}/${post._id}`;
     const iframeCode = `<iframe src="${embedUrl}" width="400" height="300"></iframe>`;
     return iframeCode;
   };
@@ -232,13 +232,31 @@ const PostCard = ({ post: initialPost, preview, removePost }) => {
 
   return (
     <Card sx={{ padding: 0 }} className="post-card">
-      <Helmet>
-        <meta charSet="utf-8" />
-        <title>SRAWS - Scam Reporting & Alert Platform</title>
-        <meta name="title" content={post.metaTitle} />
-        <meta name="description" content={post.metaDescription} />
-        <meta name="keywords" content={post.metaKeywords} />
-      </Helmet>
+<Helmet>
+
+  <meta charSet="utf-8" />
+  <title>{post ? post.title : "Loading Post..."} | Sraws - Scam Reporting & Alert Platform</title>
+  <meta name="description" content={post.metaDescription || "Description of your platform"} />
+  <meta name="keywords" content={post.metaKeywords || "scam reporting, alert, platform"} />
+  <meta name="robots" content="index, follow" />
+  
+  {/* Open Graph (OG) Tags for better sharing */}
+  <meta property="og:title" content={post.metaTitle || `Sraws - Scam Reporting & Alert Platform`} />
+  <meta property="og:description" content={post.metaDescription || "Description of your platform"} />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={`https://www.sraws.com/posts/${post ? post.slug : ''}/${post._id}`} />
+ 
+  <meta property="og:image" content={post.metaImage || 'default-image.jpg'} /> {/* Add a valid image URL */}
+  
+  {/* Twitter Card Tags for better sharing */}
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={post.metaTitle || `Sraws - Scam Reporting & Alert Platform`} />
+  <meta name="twitter:description" content={post.metaDescription || "Description of your platform"} />
+  <meta name="twitter:image" content={post.metaImage || 'default-image.jpg'} />
+  <meta name="twitter:url" content={`https://www.sraws.com/posts/${post ? post.slug : ''}/${post._id}`} />
+  
+  <link rel="canonical" href={`https://www.sraws.com/posts/${post ? post.slug : ''}/${post._id}`} />
+</Helmet>
       <Box className={preview}>
         <HorizontalStack spacing={0} alignItems="initial">
           <Stack

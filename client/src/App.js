@@ -45,6 +45,11 @@ import Help from "./components/Help";
 import CommunityChat from "./components/CommunityChat";
 import ChatPage from "./components/Legal/ChatPage";
 
+import ResetPasswordView from "./components/views/ResetPasswordView";
+import ForgotPasswordView from "./components/views/ForgotPasswordView";
+
+import Finduserview from "./components/views/Findusersview";
+
 function App() {
   initiateSocketConnection();
 
@@ -54,7 +59,7 @@ function App() {
         <CssBaseline />
         <Routes>
           <Route path="/" element={<ExploreView />} />
-          <Route path="/posts/:id" element={<PostView />} />
+          <Route path="/posts/:slug/:id/:edited?" element={<PostView />} />
           <Route
             path="/posts/create"
             element={
@@ -82,12 +87,17 @@ function App() {
           <Route path="/cookie-policy" element={<CookiePolicy />} />
           <Route path="/copyright-policy" element={<CopyrightPolicy />} />
           <Route path="/map" element={<MapPage />} />
-          <Route path="/notifications" element={<Notifications />} />
-          <Route path="/NotifyView" element={<NotifyView />} />
+        
+          <Route path="/Notifications-Center" element={<NotifyView />} />
+
+          <Route path="/forgot-password" element={<ForgotPasswordView/>} />
+          <Route path="/Reset-password" element={<ResetPasswordView/>} />
+
+
+          <Route path="/Search-for-Users" element={<Finduserview />} />
 
           <Route path="/help" element={<Help />} />
-          <Route path="/community-chat" element={<CommunityChat />} />
-          <Route path="/ChatPage" element={<ChatPage />} />
+          <Route path="/Community-Corner" element={<ChatPage />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>

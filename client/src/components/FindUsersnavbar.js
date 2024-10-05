@@ -22,7 +22,7 @@ const FindUsers = () => {
 
   const fetchUsers = async () => {
     setLoading(true);
-    const data = await getRandomUsers({ size: 10000 }); // Adjust size as needed
+    const data = await getRandomUsers({ size: 100000 }); // Adjust size as needed
     setLoading(false);
     setUsers(data);
   };

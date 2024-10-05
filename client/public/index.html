@@ -5,28 +5,56 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#000000" />
 
-  <!-- Primary Meta Tags -->
   <title>Sraws - Scam Reporting & Alert Platform</title>
-  <meta name="title" content="Sraws - Post and Comment Platform">
+  
+  <meta name="title" content="Sraws - Scam Reporting & Alert Platform">
   <meta name="description" content="Post and comment platform for Sraws">
   <meta name="keywords" content="Sraws, post, comment, platform, social media, community">
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://sraws.com">
-  <meta property="og:title" content="Sraws - Post and Comment Platform">
-  <meta property="og:description" content="Post and comment platform for SRAW">
-  <meta property="og:image" content="">
+  <meta property="og:title" content="Sraws - Scam Reporting & Alert Platform">
+  <meta property="og:description" content="Post and comment platform for Sraws">
+  <meta property="og:image" content="https://media.sraws.com/media/manu_1226/Webpage_sraws.com_66fcdfd17a474.jpeg">
   <meta property="og:image:alt" content="Sraws Platform">
   <meta property="og:site_name" content="Sraws">
 
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image">
   <meta property="twitter:url" content="https://sraws.com">
-  <meta property="twitter:title" content="Sraws - Post and Comment Platform">
+  <meta property="twitter:title" content="Sraws - Scam Reporting & Alert Platform">
   <meta property="twitter:description" content="Post and comment platform for Sraws">
-  <meta property="twitter:image" content="">
+  <meta property="twitter:image" content="https://media.sraws.com/media/manu_1226/Webpage_sraws.com_66fcdfd17a474.jpeg">
   <meta property="twitter:image:alt" content="Sraws Platform">
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Sraws",
+      "url": "https://sraws.com",
+      "description": "Post and comment platform for Sraws",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Sraws"
+      }
+    }
+    </script>
+
+
+  <!-- Analytics and Tracking -->
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-8GCC3PK2FV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-8GCC3PK2FV');
+  </script>
+  <!-- End Google tag -->
 
   <!-- Manifest and Favicon -->
   <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
@@ -44,61 +72,303 @@
   <meta name="robots" content="index, follow" />
 
 
-<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
-<script>
-  window.OneSignalDeferred = window.OneSignalDeferred || [];
-  OneSignalDeferred.push(async function(OneSignal) {
-    await OneSignal.init({
-      appId: "a4ed4ae5-e74d-4c57-b4ca-c32c1cde4db3",
-      safari_web_id: "web.onesignal.auto.458f9dc8-6677-4788-b5a2-9d66a9d7a179",
-      notifyButton: {
-        enable: true,
-      },
-    });
-  });
-</script>
-
-  <!-- Structured Data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "Sraws",
-    "url": "https://sraws.com",
-    "description": "Post and comment platform for Sraws",
-    "publisher": {
-      "@type": "Organization",
-      "name": "Sraws"
+  <!-- CSS for Modern Cookie Dialog -->
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
     }
-  }
-  </script>
 
-  <!-- Performance Enhancements -->
-  <link rel="preconnect" href="https://sraws.com">
-  <link rel="dns-prefetch" href="https://sraws.com">
-  <link rel="preload" href="https://sraws.com/main.js" as="script">
+    /* Cookie Dialog Styles */
+    .cookie-dialog, .banner {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 90%;
+      max-width: 500px;
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      z-index: 1000;
+      text-align: center;
+      display: none;
+      animation: fadeIn 0.5s ease;
+    }
 
-  <!-- Analytics and Tracking -->
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-8GCC3PK2FV"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+    .cookie-dialog.show, .banner.show {
+      display: block;
+    }
 
-    gtag('config', 'G-8GCC3PK2FV');
-  </script>
-  <!-- End Google tag -->
+    .cookie-icon, .banner img {
+      font-size: 50px;
+      margin-bottom: 10px;
+      color: #ffa500;
+    }
 
-  <!-- Accessibility -->
-  <meta name="theme-color" content="#ffffff">
-  <meta name="application-name" content="SRAWS">
-  <meta name="msapplication-TileColor" content="#ffffff">
-  <meta name="msapplication-TileImage" content="/mstile-150x150.png">
-  <meta name="msapplication-config" content="/browserconfig.xml">
+    .banner img {
+      max-width: 200px; /* Adjust size as needed */
+    }
+
+    .banner h2 {
+      margin: 10px 0;
+      font-size: 24px;
+      color: #007bff;
+    }
+
+    .banner p {
+      margin: 10px 0;
+      font-size: 18px;
+      color: #333;
+    }
+
+    .banner a {
+      color: #007bff;
+      text-decoration: underline;
+      font-weight: bold;
+    }
+
+    /* Button Styles */
+    .cookie-btn, .banner-btn {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+      margin: 0 10px;
+      box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
+    }
+
+    .cookie-btn:hover, .banner-btn:hover {
+      background-color: #0056b3;
+      box-shadow: 0 6px 25px rgba(0, 123, 255, 0.6);
+    }
+
+    /* Overlay Background */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 999;
+      display: none;
+    }
+
+    .overlay.show {
+      display: block;
+      animation: fadeIn 0.5s ease;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    /* Mobile Responsiveness */
+    @media (max-width: 600px) {
+      .cookie-dialog, .banner {
+        width: 95%;
+        padding: 20px;
+      }
+
+      .cookie-btn, .banner-btn {
+        padding: 10px 20px;
+        font-size: 14px;
+      }
+    }
+
+    .banner {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 600px;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  text-align: center;
+  display: none;
+  animation: fadeIn 0.5s ease;
+  transition: all 0.3s ease;
+}
+
+.banner.show {
+  display: block;
+}
+
+.banner-logo {
+  max-width: 120px;
+  margin-bottom: 20px;
+}
+
+.banner h2 {
+  margin: 10px 0;
+  font-size: 28px;
+  color: #007bff;
+  font-weight: bold;
+}
+
+.banner-description {
+  margin: 10px 0;
+  font-size: 18px;
+  color: #555;
+}
+
+.banner-actions {
+  margin: 20px 0;
+}
+
+.banner-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  margin: 0 10px;
+  box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
+}
+
+.banner-btn:hover {
+  background-color: #0056b3;
+  box-shadow: 0 6px 25px rgba(0, 123, 255, 0.6);
+}
+
+.banner-footer {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #777;
+}
+
+.banner-link {
+  color: #007bff;
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+  </style>
 </head>
 <body>
-  <noscript></noscript>
   <div id="root" role="main" aria-live="polite"></div>
+
+  <!-- Cookie Dialog HTML -->
+  <div class="overlay" id="cookie-overlay"></div>
+  <div class="cookie-dialog" id="cookie-dialog">
+    <div class="cookie-icon">🍪</div>
+    <p>
+      We use cookies to ensure that we give you the best experience on our website. By continuing, you agree to our use of cookies. 
+      <a href="/cookie-policy" target="_blank">Learn more</a>
+    </p>
+    <button class="cookie-btn" onclick="acceptCookies()">Accept</button>
+    <button class="cookie-btn secondary" onclick="rejectCookies()">Reject</button>
+  </div>
+
+  <!-- Big Banner -->
+  <div class="banner" id="login-banner">
+    <img src="./srawsmainlogo.png" alt="Sraws Logo" />
+    <h2>Welcome to Sraws!</h2>
+    <p>Your platform for reporting scams and safeguarding your community. 
+    <br>Join us in the fight against fraud—<strong>every Post matters!</strong></p>
+    <p>Ready to take action? <a href="/login">Login</a> to your account or <a href="/signup">Create a new account</a> to get started!</p>
+    <button class="banner-btn" onclick="redirectToLogin()">Login</button>
+    <button class="banner-btn" onclick="redirectToSignup()">Signup</button>
+</div>
+
+
+
+  <!-- JavaScript for Cookie Dialog and Banner -->
+  <script>
+    function acceptCookies() {
+        document.getElementById('cookie-dialog').classList.remove('show');
+        document.getElementById('cookie-overlay').style.display = 'none';
+        localStorage.setItem('cookiesAccepted', 'true'); // Store acceptance
+    }
+
+    function rejectCookies() {
+        document.getElementById('cookie-dialog').classList.remove('show');
+        document.getElementById('cookie-overlay').style.display = 'none';
+
+        // Reappear after 1 minute
+        setTimeout(function() {
+            document.getElementById('cookie-dialog').classList.add('show');
+            document.getElementById('cookie-overlay').style.display = 'block';
+        }, 60000); // 1 minute delay
+    }
+
+    function showLoginBanner() {
+        document.getElementById('login-banner').classList.add('show');
+    }
+
+    function hideLoginBanner() {
+        document.getElementById('login-banner').classList.remove('show');
+    }
+
+    function redirectToLogin() {
+        window.location.href = '/login'; // Replace with your login URL
+    }
+
+    function redirectToSignup() {
+        window.location.href = '/signup'; // Replace with your signup URL
+    }
+
+    window.onload = function() {
+        // Check if the user is on the homepage
+        if (window.location.pathname === '/') {
+            // Check if cookies have been accepted
+            if (!localStorage.getItem('cookiesAccepted')) {
+                document.getElementById('cookie-dialog').classList.add('show');
+                document.getElementById('cookie-overlay').style.display = 'block';
+            }
+
+            // Check login status after 6 seconds
+            setTimeout(function() {
+                if (!localStorage.getItem('user')) { // Update this line according to your login logic 
+                    showLoginBanner();
+                }
+            }, 60000); // 1 min
+        } else {
+            // Hide the login banner immediately if not on the homepage
+            hideLoginBanner();
+        }
+    };
+
+    // Optional: Hide the login banner if the user navigates to a different page
+    window.onpopstate = function() {
+        if (window.location.pathname !== '/') {
+            hideLoginBanner();
+        }
+    };
+
+    // Listen for navigation events and hide the banner if on a different page
+    window.addEventListener('popstate', function() {
+        if (window.location.pathname !== '/') {
+            hideLoginBanner();
+        }
+    });
+
+    // Optional: Check initial load for non-homepage paths and hide the banner
+    if (window.location.pathname !== '/') {
+        hideLoginBanner();
+    }
+</script>
+
+  
 </body>
 </html>

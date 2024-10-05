@@ -167,7 +167,7 @@ const CommunityChat = () => {
                   "datePublished": "${new Date(msg.createdAt).toISOString()}",
                   "inLanguage": "en",
                   "interactionType": "https://schema.org/CommentAction",
-                  "mainEntityOfPage": "https://sraws.com/community-chat"
+                  "mainEntityOfPage": "https://sraws.com/Community-Corner"
                 }
                 `}
               </script>
@@ -194,7 +194,7 @@ const CommunityChat = () => {
                           "datePublished": "${new Date(reply.createdAt).toISOString()}",
                           "inLanguage": "en",
                           "interactionType": "https://schema.org/CommentAction",
-                          "mainEntityOfPage": "https://sraws.com/community-chat"
+                          "mainEntityOfPage": "https://sraws.com/Community-Corner"
                         }
                         `}
                       </script>

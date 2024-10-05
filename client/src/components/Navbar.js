@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, useRef } from "react";
 import {
   Badge,
   Button,
@@ -15,6 +15,10 @@ import {
   useTheme,
   InputAdornment,
   Tooltip,
+  ClickAwayListener,
+  List,
+  ListItem,
+  ListItemText,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import {
@@ -48,6 +52,9 @@ const Navbar = () => {
   const theme = useTheme();
   const username = user && user.username;
   const [search, setSearch] = useState("");
+  const [searchHistory, setSearchHistory] = useState([]); // Search history state
+  const [showDropdown, setShowDropdown] = useState(false); // Controls search suggestions dropdown
+  const inputRef = useRef(null); // Reference to handle outside clicks
   const [messageNotifications, setMessageNotifications] = useState(0);
   const [unreadMessages, setUnreadMessages] = useState({});
   const [searchIcon, setSearchIcon] = useState(false);
@@ -65,7 +72,7 @@ const Navbar = () => {
     if (!userId) return;
 
     try {
-      const response = await axios.get(`https://api.sraws.com/api/notifications/${userId}`);
+      const response = await axios.get(`/api/notifications/${userId}`);
       const notificationsData = response.data;
 
       // Calculate unread notifications count
@@ -108,15 +115,6 @@ const Navbar = () => {
     handleCloseMenu(); // Close menu after logout
   };
 
-  const handleChange = (e) => {
-    setSearch(e.target.value);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const queryParams = new URLSearchParams({ search }).toString();
-    navigate(`/search?${queryParams}`);
-  };
 
   const handleSearchIcon = () => {
     setSearchIcon(!searchIcon);
@@ -161,6 +159,55 @@ const Navbar = () => {
 
   const handleCloseNotifications = () => {
     setOpenNotifications(false);
+  };
+
+  const exampleSearches = ["Google Voice verification code scams", "Phonepay Scam", "India", ];
+
+  // Fetch search history from localStorage
+  useEffect(() => {
+    const storedHistory = JSON.parse(localStorage.getItem("searchHistory")) || [];
+    setSearchHistory(storedHistory);
+  }, []);
+
+  // Update window width
+  useEffect(() => {
+    const updateDimensions = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    window.addEventListener("resize", updateDimensions);
+    return () => window.removeEventListener("resize", updateDimensions);
+  }, []);
+
+  // Handle search change and show dropdown
+  const handleChange = (e) => {
+    setSearch(e.target.value);
+    setShowDropdown(true);
+  };
+
+  // Handle search submit
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (search) {
+      const newHistory = [search, ...searchHistory.filter((item) => item !== search)].slice(0, 5); // Limit to last 5 searches
+      setSearchHistory(newHistory);
+      localStorage.setItem("searchHistory", JSON.stringify(newHistory));
+    }
+    setShowDropdown(false); // Close the dropdown
+    const queryParams = new URLSearchParams({ search }).toString();
+    navigate(`/search?${queryParams}`);
+  };
+
+  // Handle search suggestion click
+  const handleSuggestionClick = (suggestion) => {
+    setSearch(suggestion);
+    setShowDropdown(false);
+    const queryParams = new URLSearchParams({ search: suggestion }).toString();
+    navigate(`/search?${queryParams}`);
+  };
+
+  // Close dropdown when clicking outside
+  const handleClickAway = () => {
+    setShowDropdown(false);
   };
 
   return (
@@ -212,13 +259,16 @@ const Navbar = () => {
         </HorizontalStack>
 
         {!navbarWidth && (
-          <Box component="form" onSubmit={handleSubmit} sx={{ flexGrow: 1, maxWidth: "40%" }} >
+          <ClickAwayListener onClickAway={handleClickAway}>
+          <Box component="form" onSubmit={handleSubmit} sx={{ flexGrow: 1, maxWidth: "40%", position: "relative" }}>
             <TextField
               size="small"
-              label="Search"
+              label="Search by title, tag, or keywords..."
               fullWidth
               onChange={handleChange}
               value={search}
+              inputRef={inputRef}
+              onFocus={() => setShowDropdown(true)} // Show dropdown on focus
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -229,7 +279,67 @@ const Navbar = () => {
                 ),
               }}
             />
+
+{showDropdown && (
+            <Box
+              sx={{
+                position: "absolute",
+                width: "100%",
+                bgcolor: "background.paper",
+                boxShadow: 3,
+                zIndex: 10,
+                mt: 1,
+                borderRadius: 1,
+                overflow: "hidden",
+              }}
+            >
+              <List dense>
+                {exampleSearches.length > 0 ? (
+                  exampleSearches.map((example) => (
+                    <ListItem
+                      button
+                      key={example}
+                      onClick={() => handleSuggestionClick(example)}
+                      sx={{
+                        '&:hover': {
+                          bgcolor: 'action.hover',
+                        },
+                      }}
+                    >
+                      <ListItemText primary={example} />
+                    </ListItem>
+                  ))
+                ) : (
+                  <ListItem>
+                    <ListItemText primary="No suggestions available." />
+                  </ListItem>
+                )}
+                {searchHistory.length > 0 && (
+                  <>
+                    <Typography variant="subtitle2" sx={{ px: 2, mt: 1, fontWeight: 'bold' }}>
+                      Recent Searches
+                    </Typography>
+                    {searchHistory.map((historyItem, index) => (
+                      <ListItem
+                        button
+                        key={index}
+                        onClick={() => handleSuggestionClick(historyItem)}
+                        sx={{
+                          '&:hover': {
+                            bgcolor: 'action.hover',
+                          },
+                        }}
+                      >
+                        <ListItemText primary={historyItem} />
+                      </ListItem>
+                    ))}
+                  </>
+                )}
+              </List>
+            </Box>
+          )}
           </Box>
+        </ClickAwayListener>
         )}
 
         <HorizontalStack>
@@ -240,12 +350,13 @@ const Navbar = () => {
           )}
           
           <Tooltip title="Find Users" arrow>
-           <IconButton onClick={handleOpenFindUsers} sx={{ color: 'primary.main' }}>
-             <Tooltip title="Total Users">
-               <AiOutlineUser />
-             </Tooltip>
-           </IconButton>
-          </Tooltip>
+      <IconButton
+        onClick={() => navigate("/Search-for-Users")}  
+        sx={{ color: 'primary.main' }}
+      >
+        <AiOutlineUser />
+      </IconButton>
+    </Tooltip>
 
           <Tooltip title="Home" arrow>
            <IconButton component={Link} to={"/"} sx={{ color: 'primary.main' }}>
@@ -257,7 +368,7 @@ const Navbar = () => {
 
           {user && (
             <>
-              <IconButton component={Link} to={"/Notifyview"} sx={{ color: 'primary.main' }}>
+              <IconButton component={Link} to={"/Notifications-Center"} sx={{ color: 'primary.main' }}>
                 <Tooltip title="Notifications" arrow>
                   <Badge badgeContent={unreadCount} color="error">
                     <AiOutlineBell />
@@ -313,7 +424,7 @@ const Navbar = () => {
           >
             <MenuItem onClick={() => navigate("/About")}>About</MenuItem>
             <MenuItem onClick={() => navigate("/Help")}>Help</MenuItem>
-            <MenuItem onClick={() => navigate("/ChatPage")}>SRAWS Community</MenuItem>
+            <MenuItem onClick={() => navigate("/Community-Corner")}>Sraws Community</MenuItem>
             <MenuItem onClick={() => navigate("/privacy-policy")}>Privacy Policies</MenuItem>
             <MenuItem onClick={() => navigate("/terms-of-service")}>Terms of Service</MenuItem>
             <MenuItem onClick={() => navigate("/cookie-policy")}>Cookie Policy</MenuItem>
@@ -378,27 +489,104 @@ const Navbar = () => {
 
       {/* Search box in mobile view */}
       {navbarWidth && searchIcon && (
+        <ClickAwayListener onClickAway={handleClickAway}>
         <Box component="form" onSubmit={handleSubmit} px={2} mt={1}>
           <TextField
             size="small"
-            label="Search for posts..."
+            label="Search by title, tag, or keywords..."
             fullWidth
             onChange={handleChange}
-            value={search}
+            inputRef={inputRef}
+            onFocus={() => setShowDropdown(true)}
+            sx={{
+              borderRadius: 2, // Rounded corners
+              mb: 2,
+              boxShadow: 1, // Subtle shadow
+              '& .MuiOutlinedInput-root': {
+                '& fieldset': {
+                  borderColor: 'primary.main', // Border color
+                },
+                '&:hover fieldset': {
+                  borderColor: 'secondary.main', // Hover border color
+                },
+              },
+            }}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
-                  <IconButton type="submit">
+                  <IconButton type="submit" sx={{ color: "primary.main" }}>
                     <AiOutlineSearch />
                   </IconButton>
                 </InputAdornment>
               ),
             }}
           />
+
+{showDropdown && (
+            <Box
+              sx={{
+                position: "absolute",
+                width: "100%",
+                bgcolor: "background.paper",
+                boxShadow: 3,
+                zIndex: 10,
+                mt: 1,
+                borderRadius: 1,
+                overflow: "hidden",
+              }}
+            >
+              <List dense>
+                {exampleSearches.length > 0 ? (
+                  exampleSearches.map((example) => (
+                    <ListItem
+                      button
+                      key={example}
+                      onClick={() => handleSuggestionClick(example)}
+                      sx={{
+                        '&:hover': {
+                          bgcolor: 'action.hover',
+                        },
+                      }}
+                    >
+                      <ListItemText primary={example} />
+                    </ListItem>
+                  ))
+                ) : (
+                  <ListItem>
+                    <ListItemText primary="No suggestions available." />
+                  </ListItem>
+                )}
+                {searchHistory.length > 0 && (
+                  <>
+                    <Typography variant="subtitle2" sx={{ px: 2, mt: 1, fontWeight: 'bold' }}>
+                      Recent Searches
+                    </Typography>
+                    {searchHistory.map((historyItem, index) => (
+                      <ListItem
+                        button
+                        key={index}
+                        onClick={() => handleSuggestionClick(historyItem)}
+                        sx={{
+                          '&:hover': {
+                            bgcolor: 'action.hover',
+                          },
+                        }}
+                      >
+                        <ListItemText primary={historyItem} />
+                      </ListItem>
+                    ))}
+                  </>
+                )}
+              </List>
+            </Box>
+          )}
         </Box>
+      </ClickAwayListener>
+        
       )}
     </Stack>
   );
 };
 
 export default Navbar;
+

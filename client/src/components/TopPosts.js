@@ -44,7 +44,7 @@ const TopPosts = () => {
     <>
       {/* Helmet for page-level SEO */}
       <Helmet>
-        <title>Top Posts - Sraws</title>
+      <title>Sraws - Scam Reporting & Alert Platform</title>
         <meta
           name="description"
           content="Check out the top posts on Sraws. See what's trending and popular among the users."
@@ -84,7 +84,7 @@ const TopPosts = () => {
                   <React.Fragment key={post._id}>
                     {/* Helmet for individual post SEO */}
                     <Helmet>
-                      <title>{`${post.title} - Sraws Post`}</title>
+                      <title>Sraws - Scam Reporting & Alert Platform</title>
                       <meta
                         name="description"
                         content={`Read "${post.title}" on Sraws. ${post.content.substring(
@@ -100,10 +100,8 @@ const TopPosts = () => {
                         property="og:description"
                         content={`${post.content.substring(0, 150)}...`}
                       />
-                      <meta
-                        property="og:url"
-                        content={`https://sraws.com/posts/${post._id}`}
-                      />
+                      <meta property="og:url" content={`https://www.sraws.com/posts/${post ? post.slug : ''}/${post._id}`} />
+ 
                       <meta property="og:type" content="article" />
                       <meta name="robots" content="index, follow" />
                     </Helmet>

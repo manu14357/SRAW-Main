@@ -17,4 +17,7 @@ router.delete("/unfollow/:id", verifyToken, userControllers.unfollow);
 router.get("/followers/:id", userControllers.getFollowers);
 router.get("/following/:id", userControllers.getFollowing);
 
+router.post('/forgot-password', userControllers.sendPasswordResetEmail);
+router.post('/reset-password', userControllers.resetPassword);
+
 module.exports = router;

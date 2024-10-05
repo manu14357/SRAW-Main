@@ -3,7 +3,10 @@ import React from "react";
 
 const PostGridLayout = ({ left, center, right }) => {
   return (
-    <Grid container spacing={3}>
+    <Grid container spacing={3} sx={{ 
+      // Apply negative margin for mobile
+      marginTop: { xs: '-3rem', md: -3 } // Adjust the value as necessary
+    }}>
       {/* Left Content */}
       <Grid item xs={12} md={3.3} >
         {left}

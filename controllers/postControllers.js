@@ -16,7 +16,20 @@ const POINTS_DEDUCTION = 2;
 
 const createPost = async (req, res) => {
   try {
-    const { title, content, userId, country, state, city, area, mediaUrls, metaTitle, metaDescription, metaKeywords } = req.body;
+    const {
+      title,
+      content,
+      userId,
+      country,
+      state,
+      city,
+      area,
+      mediaUrls,
+      metaTitle,
+      metaDescription,
+      metaKeywords,
+      slug,
+    } = req.body;
 
     // Check if title, content, and userId are provided
     if (!(title && content && userId)) {
@@ -37,8 +50,11 @@ const createPost = async (req, res) => {
     // Ensure mediaUrls is an array, default to empty array if not provided
     const validatedMediaUrls = Array.isArray(mediaUrls) ? mediaUrls : [];
 
+    // Generate slug if not provided
+    const generatedSlug = slug || `${title.replace(/\s+/g, '-').toLowerCase()}-${country.replace(/\s+/g, '-').toLowerCase()}`;
+
     // Generate default SEO values if not provided
-    const defaultMetaTitle = `${title} - Your Website Name`;
+    const defaultMetaTitle = `${title} - Sraws`;
     const defaultMetaDescription = `${content.substring(0, 160)}...`;
     const defaultMetaKeywords = `${title}, ${city}, ${state}, ${country}`;
 
@@ -46,6 +62,7 @@ const createPost = async (req, res) => {
     const post = await Post.create({
       title,
       content,
+      slug: generatedSlug,
       poster: userId,
       address: {
         country,
@@ -54,11 +71,12 @@ const createPost = async (req, res) => {
         area,
       },
       mediaUrls: validatedMediaUrls,
-   
       metaDescription: metaDescription || defaultMetaDescription,
       metaKeywords: metaKeywords || defaultMetaKeywords,
     });
+
     await User.findByIdAndUpdate(userId, { $inc: { socialPoints: POINTS_PER_POST } });
+
     // Respond with the created post
     res.status(201).json(post);
   } catch (err) {
@@ -67,6 +85,7 @@ const createPost = async (req, res) => {
     res.status(400).json({ error: err.message });
   }
 };
+
 
 
 
@@ -202,7 +221,7 @@ const updatePost = async (req, res) => {
     if (Array.isArray(mediaUrls)) post.mediaUrls = mediaUrls;
 
     // Generate default SEO values if not provided
-    post.metaTitle = metaTitle || `${post.title} - Your Website Name`;
+    post.metaTitle = metaTitle || `${post.title} - Sraws`;
     post.metaDescription = metaDescription || `${post.content.substring(0, 160)}...`;
     post.metaKeywords = metaKeywords || `${post.title}, ${post.address.city}, ${post.address.state}, ${post.address.country}`;
 

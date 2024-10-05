@@ -58,7 +58,7 @@ router.get("/:id", async (req, res) => {
     }
 
     // Set SEO meta tags
-    const pageTitle = `${post.title} - Your Website Name`;
+    const pageTitle = `${post.title} - Sraws`;
     const pageDescription = `${post.title} - ${post.content.substring(0, 160)}...`; // Limit description to 160 characters
     const pageKeywords = `${post.title}, ${post.tags.join(", ")}, ${post.author}`; // Example assuming post.tags and post.author exist
 

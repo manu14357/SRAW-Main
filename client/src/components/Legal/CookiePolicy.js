@@ -9,6 +9,7 @@ const CookiePolicy = () => {
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <Helmet>
         <title>Cookie Policy - Sraws</title>
+        <meta name="title" content="Cookie Policy - Sraws"/>
         <meta name="description" content="Learn about the types of cookies we use, how we use them, and how you can manage your cookie preferences." />
         <meta name="keywords" content="Cookie Policy, Cookies, Privacy, User Data, Website Policy" />
         <meta name="author" content="Sraws" />
@@ -98,7 +99,7 @@ const CookiePolicy = () => {
             
             <Typography variant="body1" paragraph>
                 Email: support@team.sraws.com<br />
-                Community Forum: <a href="https://sraws.com/ChatPage" target="_blank" rel="noopener noreferrer">SRAWS Community</a>
+                Community Forum: <a href="https://sraws.com/Community-Corner" target="_blank" rel="noopener noreferrer">SRAWS Community</a>
             </Typography>
 
           </Box>

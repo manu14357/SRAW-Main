@@ -40,7 +40,7 @@ const FindUsers = () => {
     <>
       {/* Helmet for SEO */}
       <Helmet>
-        <title>Find Users - Sraws</title>
+      <title>Sraws - Scam Reporting & Alert Platform</title>
         <meta
           name="description"
           content="Discover random users on Sraws. Connect with people and explore their profiles."
